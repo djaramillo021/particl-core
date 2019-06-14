@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2019 The Particl Core developers
+// Copyright (c) 2017-2019 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1431,7 +1431,7 @@ bool CHDWallet::AddressBookChangedNotify(const CTxDestination &address, ChangeTy
 
 DBErrors CHDWallet::LoadWallet(bool& fFirstRunRet)
 {
-    fParticlWallet = true;
+    fEfinWallet = true;
 
     if (!ParseMoney(gArgs.GetArg("-reservebalance", ""), nReserveBalance)) {
         InitError(_("Invalid amount for -reservebalance=<amount>"));
@@ -2060,7 +2060,7 @@ CAmount CHDWallet::GetDebit(const CTxIn &txin, const isminefilter &filter) const
 
 CAmount CHDWallet::GetDebit(const CTransaction& tx, const isminefilter& filter) const
 {
-    if (!tx.IsParticlVersion())
+    if (!tx.IsEfinVersion())
         return CWallet::GetDebit(tx, filter);
 
     CAmount nDebit = 0;
@@ -3622,7 +3622,7 @@ int CHDWallet::AddStandardInputs(interfaces::Chain::Lock& locked_chain, CWalletT
     wtx.BindWallet(this);
     wtx.fFromMe = true;
     CMutableTransaction txNew;
-    txNew.nVersion = PARTICL_TXN_VERSION;
+    txNew.nVersion = EFIN_TXN_VERSION;
     txNew.vout.clear();
 
     // Discourage fee sniping. See CWallet::CreateTransaction
@@ -3844,7 +3844,7 @@ int CHDWallet::AddStandardInputs(interfaces::Chain::Lock& locked_chain, CWalletT
                 if (it != coinControl->m_inputData.end()) {
                     sigdata.scriptWitness = it->second.scriptWitness;
                 } else
-                if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_PARTICL, scriptPubKey, sigdata)) {
+                if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_EFIN, scriptPubKey, sigdata)) {
                     return wserrorN(1, sError, __func__, "Dummy signature failed.");
                 }
                 UpdateInput(txNew.vin[nIn], sigdata);
@@ -4192,7 +4192,7 @@ int CHDWallet::AddBlindedInputs(interfaces::Chain::Lock& locked_chain, CWalletTx
     wtx.BindWallet(this);
     wtx.fFromMe = true;
     CMutableTransaction txNew;
-    txNew.nVersion = PARTICL_TXN_VERSION;
+    txNew.nVersion = EFIN_TXN_VERSION;
     txNew.vout.clear();
 
     // Discourage fee sniping. See CWallet::CreateTransaction
@@ -4369,7 +4369,7 @@ int CHDWallet::AddBlindedInputs(interfaces::Chain::Lock& locked_chain, CWalletTx
                 if (it != coinControl->m_inputData.end()) {
                     sigdata.scriptWitness = it->second.scriptWitness;
                 } else
-                if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_PARTICL, scriptPubKey, sigdata)) {
+                if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_EFIN, scriptPubKey, sigdata)) {
                     return wserrorN(1, sError, __func__, "Dummy signature failed.");
                 }
                 UpdateInput(txNew.vin[nIn], sigdata);
@@ -4937,7 +4937,7 @@ int CHDWallet::AddAnonInputs(interfaces::Chain::Lock& locked_chain, CWalletTx &w
     wtx.BindWallet(this);
     wtx.fFromMe = true;
     CMutableTransaction txNew;
-    txNew.nVersion = PARTICL_TXN_VERSION;
+    txNew.nVersion = EFIN_TXN_VERSION;
     txNew.vout.clear();
 
     txNew.nLockTime = 0;
@@ -8352,7 +8352,7 @@ bool CHDWallet::CreateTransaction(interfaces::Chain::Lock& locked_chain, const s
 {
     WalletLogPrintf("CHDWallet %s\n", __func__);
 
-    if (!fParticlWallet) {
+    if (!fEfinWallet) {
         return CWallet::CreateTransaction(locked_chain, vecSend, tx, reservekey, nFeeRet, nChangePosInOut, strFailReason, coin_control, sign);
     }
 
@@ -8507,7 +8507,7 @@ bool CHDWallet::DummySignInput(CTxIn &tx_in, const CTxOut &txout, bool use_max_s
     const CScript &scriptPubKey = txout.scriptPubKey;
     SignatureData sigdata;
 
-    if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_PARTICL, scriptPubKey, sigdata)) {
+    if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_EFIN, scriptPubKey, sigdata)) {
         return false;
     } else {
         UpdateInput(tx_in, sigdata);
@@ -8524,7 +8524,7 @@ bool CHDWallet::DummySignInput(CTxIn &tx_in, const CTxOutBaseRef &txout) const
     const CScript &scriptPubKey = *txout->GetPScriptPubKey();
     SignatureData sigdata;
 
-    if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_PARTICL, scriptPubKey, sigdata)) {
+    if (!ProduceSignature(*this, DUMMY_SIGNATURE_CREATOR_EFIN, scriptPubKey, sigdata)) {
         return false;
     } else {
         UpdateInput(tx_in, sigdata);
@@ -12336,7 +12336,7 @@ bool CHDWallet::CreateCoinStake(unsigned int nBits, int64_t nTime, int nBlockHei
             txNew.vpout.clear();
 
             // Mark as coin stake transaction
-            txNew.nVersion = PARTICL_TXN_VERSION;
+            txNew.nVersion = EFIN_TXN_VERSION;
             txNew.SetType(TXN_COINSTAKE);
 
             txNew.vin.push_back(CTxIn(pcoin.first->GetHash(), pcoin.second));
@@ -12658,7 +12658,7 @@ bool CHDWallet::SignBlock(CBlockTemplate *pblocktemplate, int nHeight, int64_t n
     CBlockIndex *pindexPrev = ::ChainActive().Tip();
 
     CKey key;
-    pblock->nVersion = PARTICL_BLOCK_VERSION;
+    pblock->nVersion = EFIN_BLOCK_VERSION;
     pblock->nBits = GetNextTargetRequired(pindexPrev);
     if (LogAcceptCategory(BCLog::POS)) {
         WalletLogPrintf("%s, nBits %d\n", __func__, pblock->nBits);
@@ -12846,12 +12846,12 @@ void RestartStakingThreads()
     StartThreadStakeMiner();
 };
 
-bool IsParticlWallet(const CKeyStore *win)
+bool IsEfinWallet(const CKeyStore *win)
 {
     return win && dynamic_cast<const CHDWallet*>(win);
 };
 
-CHDWallet *GetParticlWallet(CKeyStore *win)
+CHDWallet *GetEfinWallet(CKeyStore *win)
 {
     CHDWallet *rv;
     if (!win) {
@@ -12863,7 +12863,7 @@ CHDWallet *GetParticlWallet(CKeyStore *win)
     return rv;
 };
 
-const CHDWallet *GetParticlWallet(const CKeyStore *win)
+const CHDWallet *GetEfinWallet(const CKeyStore *win)
 {
     const CHDWallet *rv;
     if (!win) {

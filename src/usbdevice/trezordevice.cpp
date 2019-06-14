@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 The Particl Core developers
+// Copyright (c) 2018-2019 The Efin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -628,7 +628,7 @@ int CTrezorDevice::CompleteTransaction(CMutableTransaction* tx)
             if (ci->second.m_shared_secret.size() == 32) {
                 const std::vector<uint8_t>& shared_secret = ci->second.m_shared_secret;
                 std::string s(shared_secret.begin(), shared_secret.end());
-                msg_input->set_particl_shared_secret(s);
+                msg_input->set_efin_shared_secret(s);
             }
 
             std::string hash;
@@ -701,7 +701,7 @@ int CTrezorDevice::CompleteTransaction(CMutableTransaction* tx)
                 std::string s(txd->vData.begin(), txd->vData.end());
                 msg_output->set_op_return_data(s);
                 msg_output->set_amount(0);
-                msg_output->set_script_type(hw::trezor::messages::bitcoin::TxAck::TransactionType::TxOutputType::PAYTOPARTICLDATA);
+                msg_output->set_script_type(hw::trezor::messages::bitcoin::TxAck::TransactionType::TxOutputType::PAYTOEFINDATA);
             } else {
                 return errorN(1, sError, __func__, "Unknown type of output %d.", i);
             }
@@ -730,7 +730,7 @@ int CTrezorDevice::CompleteTransaction(CMutableTransaction* tx)
 
 std::string CTrezorDevice::GetCoinName()
 {
-    return Params().NetworkIDString() == "main" ? "Particl" : "Particl Testnet";
+    return Params().NetworkIDString() == "main" ? "Efin" : "Efin Testnet";
 };
 
 int CTrezorDevice::LoadMnemonic(uint32_t wordcount, bool pinprotection, std::string& sError)

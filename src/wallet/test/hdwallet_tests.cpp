@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2019 The Particl Core developers
+// Copyright (c) 2017-2019 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -346,8 +346,8 @@ BOOST_AUTO_TEST_CASE(test_TxOutRingCT)
     BOOST_MESSAGE("---------------- Serialize Transaction with No Segwit ---------------------\n");
     CMutableTransaction tx;
     tx.vpout.emplace_back(txout);
-    tx.nVersion = 2|PARTICL_TXN_VERSION;
-    BOOST_CHECK_MESSAGE(tx.IsParticlVersion(), "failed IsParticlVersion");
+    tx.nVersion = 2|EFIN_TXN_VERSION;
+    BOOST_CHECK_MESSAGE(tx.IsEfinVersion(), "failed IsEfinVersion");
 
     //The peer that sends the block sets the version that the data stream will use!
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION|SERIALIZE_TRANSACTION_NO_WITNESS);

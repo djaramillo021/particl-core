@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-# Copyright (c) 2017-2018 The Particl Core developers
+# Copyright (c) 2017-2018 The Efin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_particl import ParticlTestFramework
+from test_framework.test_efin import EfinTestFramework
 from test_framework.util import connect_nodes_bi
 from test_framework.authproxy import JSONRPCException
 
 
-class FilterTransactionsTest(ParticlTestFramework):
+class FilterTransactionsTest(EfinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 3

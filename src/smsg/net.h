@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2019 The Particl Core developers
+// Copyright (c) 2018-2019 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_SMSG_NET_H
-#define PARTICL_SMSG_NET_H
+#ifndef EFIN_SMSG_NET_H
+#define EFIN_SMSG_NET_H
 
 #include <sync.h>
 
@@ -19,4 +19,4 @@ public:
     bool fEnabled = false;
 };
 
-#endif // PARTICL_SMSG_NET_H
+#endif // EFIN_SMSG_NET_H

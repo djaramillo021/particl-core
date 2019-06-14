@@ -15,7 +15,7 @@
 
 static void AssembleBlock(benchmark::State& state)
 {
-    fParticlMode = false;
+    fEfinMode = false;
     const std::vector<unsigned char> op_true{OP_TRUE};
     CScriptWitness witness;
     witness.stack.push_back(op_true);

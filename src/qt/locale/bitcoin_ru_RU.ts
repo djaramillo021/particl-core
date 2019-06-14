@@ -66,12 +66,12 @@
         <translation>Адреса получения</translation>
     </message>
     <message>
-        <source>These are your Particl addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Это ваши Particl адреса для отправки платежа. Всегда проверяйте сумму и адрес получателя перед отправкой платежа.</translation>
+        <source>These are your Efin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Это ваши Efin адреса для отправки платежа. Всегда проверяйте сумму и адрес получателя перед отправкой платежа.</translation>
     </message>
     <message>
-        <source>These are your Particl addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Это ваши Particl адреса для получения платежей. Настоятельно рекомендуем использовать новые адреса для получения каждой транзакции.</translation>
+        <source>These are your Efin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Это ваши Efin адреса для получения платежей. Настоятельно рекомендуем использовать новые адреса для получения каждой транзакции.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -172,7 +172,7 @@
         <translation>Подтвердите шифрование кошелька</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR PARTICL&lt;/b&gt;!</source>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EFIN&lt;/b&gt;!</source>
         <translation>Внимание: если вы зашифруете ваш кошелек и потеряете ваш пароль, то вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ БИТКОЙНЫ&lt;/b&gt;!</translation>
     </message>
     <message>
@@ -184,7 +184,7 @@
         <translation>Кошелек зашифрован</translation>
     </message>
     <message>
-        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your particl from being stolen by malware infecting your computer.</source>
+        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your efin from being stolen by malware infecting your computer.</source>
         <translation>%1 закроется сейчас для завершения процесса шифрования. Запомните что шифрование вашего кошелька не сможет полностью защитить ваши биткойны от кражи при помощи вредоносного ПО, заразившего ваш компьютер.</translation>
     </message>
     <message>
@@ -354,7 +354,7 @@
         <translation>Прокси &lt;b&gt;включен&lt;/b&gt;: %1</translation>
     </message>
     <message>
-        <source>Send coins to a Particl address</source>
+        <source>Send coins to a Efin address</source>
         <translation>Послать средства на биткойн адрес</translation>
     </message>
     <message>
@@ -378,8 +378,8 @@
         <translation>&amp;Проверить сообщение...</translation>
     </message>
     <message>
-        <source>Particl.</source>
-        <translation>Particl Core</translation>
+        <source>Efin.</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -406,12 +406,12 @@
         <translation>Зашифровать приватные ключи, принадлежащие вашему кошельку</translation>
     </message>
     <message>
-        <source>Sign messages with your Particl addresses to prove you own them</source>
-        <translation>Подписывайте сообщения Particl адресами чтобы подтвердить что это написали именно Вы</translation>
+        <source>Sign messages with your Efin addresses to prove you own them</source>
+        <translation>Подписывайте сообщения Efin адресами чтобы подтвердить что это написали именно Вы</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Particl addresses</source>
-        <translation>Проверяйте сообщения чтобы убедиться что они подписаны конкретными Particl адресами</translation>
+        <source>Verify messages to ensure they were signed with specified Efin addresses</source>
+        <translation>Проверяйте сообщения чтобы убедиться что они подписаны конкретными Efin адресами</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -430,7 +430,7 @@
         <translation>Панель вкладок</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and particl: URIs)</source>
+        <source>Request payments (generates QR codes and efin: URIs)</source>
         <translation>Запросить платеж</translation>
     </message>
     <message>
@@ -442,7 +442,7 @@
         <translation>Показать список использованных адресов и меток получателей</translation>
     </message>
     <message>
-        <source>Open a particl: URI or payment request</source>
+        <source>Open a efin: URI or payment request</source>
         <translation>Открыть биткойн: URI или запрос платежа</translation>
     </message>
     <message>
@@ -450,8 +450,8 @@
         <translation>Опции командной строки</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Particl network</source>
-        <translation><numerusform>%n активное подключение к сети Particl.</numerusform><numerusform>%n активных подключения к сети Particl.</numerusform><numerusform>%n активных подключений к сети Particl.</numerusform><numerusform>%n активных подключений к сети Particl.</numerusform></translation>
+        <source>%n active connection(s) to Efin network</source>
+        <translation><numerusform>%n активное подключение к сети Efin.</numerusform><numerusform>%n активных подключения к сети Efin.</numerusform><numerusform>%n активных подключений к сети Efin.</numerusform><numerusform>%n активных подключений к сети Efin.</numerusform></translation>
     </message>
     <message>
         <source>Indexing blocks on disk...</source>
@@ -554,8 +554,8 @@
         <translation>Кошелек &lt;b&gt;зашифрован&lt;/b&gt; и сейчас &lt;b&gt;заблокирован&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Particl can no longer continue safely and will quit.</source>
-        <translation>Произошла критическая ошибка. Particl больше не может продолжать безопасную работу и будет закрыт.</translation>
+        <source>A fatal error occurred. Efin can no longer continue safely and will quit.</source>
+        <translation>Произошла критическая ошибка. Efin больше не может продолжать безопасную работу и будет закрыт.</translation>
     </message>
 </context>
 <context>
@@ -797,8 +797,8 @@
         <translation>Использовать пользовательскую директорию данных</translation>
     </message>
     <message>
-        <source>Particl.</source>
-        <translation>Particl Core</translation>
+        <source>Efin.</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
@@ -828,11 +828,11 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the particl network, as detailed below.</source>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the efin network, as detailed below.</source>
         <translation>Последние транзакции пока могут быть не видны, поэтому вы можете видеть некорректный баланс ваших кошельков. Отображаемая информация будет верна после завершения синхронизации. Прогресс синхронизации вы можете видеть ниже.</translation>
     </message>
     <message>
-        <source>Attempting to spend particl that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <source>Attempting to spend efin that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
         <translation>Попытка потратить средства, использованные в транзакциях, которые ещё не синхронизированы, будет отклонена сетью.</translation>
     </message>
     <message>
@@ -982,8 +982,8 @@
         <translation>Разрешить входящие соединения</translation>
     </message>
     <message>
-        <source>Connect to the Particl network through a SOCKS5 proxy.</source>
-        <translation>Подключится к сети Particl через SOCKS5 прокси.</translation>
+        <source>Connect to the Efin network through a SOCKS5 proxy.</source>
+        <translation>Подключится к сети Efin через SOCKS5 прокси.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
@@ -1018,7 +1018,7 @@
         <translation>Tor</translation>
     </message>
     <message>
-        <source>Connect to the Particl network through a separate SOCKS5 proxy for Tor hidden services.</source>
+        <source>Connect to the Efin network through a separate SOCKS5 proxy for Tor hidden services.</source>
         <translation>Соединяться к Биткоин-сети через отдельные SOCKS5 прокси через Tor hidden services:</translation>
     </message>
     <message>
@@ -1148,8 +1148,8 @@
         <translation>Ошибка запроса платежа</translation>
     </message>
     <message>
-        <source>'particl://' is not a valid URI. Use 'particl:' instead.</source>
-        <translation>'particl://' не верный URI. Используйте 'particl:' вместо этого.</translation>
+        <source>'efin://' is not a valid URI. Use 'efin:' instead.</source>
+        <translation>'efin://' не верный URI. Используйте 'efin:' вместо этого.</translation>
     </message>
     <message>
         <source>Invalid payment address %1</source>
@@ -1214,7 +1214,7 @@
         <translation>Количество</translation>
     </message>
     <message>
-        <source>Enter a Particl address (e.g. %1)</source>
+        <source>Enter a Efin address (e.g. %1)</source>
         <translation>Введите биткоин-адрес (напр. %1)</translation>
     </message>
     <message>
@@ -1815,8 +1815,8 @@
         <translation>Истекло время ожидания запроса платежа</translation>
     </message>
     <message>
-        <source>Warning: Invalid Particl address</source>
-        <translation>Предупреждение: Неверный Particl адрес</translation>
+        <source>Warning: Invalid Efin address</source>
+        <translation>Предупреждение: Неверный Efin адрес</translation>
     </message>
     <message>
         <source>Warning: Unknown change address</source>
@@ -2268,8 +2268,8 @@
         <translation>Невозможно запустить HTTP-сервер. Для получения более детальной информации необходимо обратиться к журналу отладки.</translation>
     </message>
     <message>
-        <source>Particl Core</source>
-        <translation>Particl Core</translation>
+        <source>Efin Core</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>The %s developers</source>

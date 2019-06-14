@@ -1447,7 +1447,7 @@ static void ThreadMapPort()
             }
         }
 
-        std::string strDesc = "Particl " + FormatFullVersion();
+        std::string strDesc = "Efin " + FormatFullVersion();
 
         do {
 #ifndef UPNPDISCOVER_SUCCESS

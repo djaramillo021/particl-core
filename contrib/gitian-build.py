@@ -23,13 +23,13 @@ def setup():
         programs += ['apt-cacher-ng', 'lxc', 'debootstrap']
     subprocess.check_call(['sudo', 'apt-get', 'install', '-qq'] + programs)
     if not os.path.isdir('gitian.sigs'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/particl/gitian.sigs.git'])
-    if not os.path.isdir('particl-detached-sigs'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/particl/particl-detached-sigs.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/efin/gitian.sigs.git'])
+    if not os.path.isdir('efin-detached-sigs'):
+        subprocess.check_call(['git', 'clone', 'https://github.com/efin/efin-detached-sigs.git'])
     if not os.path.isdir('gitian-builder'):
         subprocess.check_call(['git', 'clone', 'https://github.com/devrandom/gitian-builder.git'])
-    if not os.path.isdir('particl-core'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/particl/particl-core.git'])
+    if not os.path.isdir('efin-core'):
+        subprocess.check_call(['git', 'clone', 'https://github.com/efin/efin-core.git'])
     os.chdir('gitian-builder')
     make_image_prog = ['bin/make-base-vm', '--suite', 'bionic', '--arch', 'amd64']
     if args.docker:
@@ -46,7 +46,7 @@ def setup():
 def build():
     global args, workdir
 
-    os.makedirs('particl-binaries/' + args.version, exist_ok=True)
+    os.makedirs('efin-binaries/' + args.version, exist_ok=True)
     print('\nBuilding Dependencies\n')
     os.chdir('gitian-builder')
     os.makedirs('inputs', exist_ok=True)
@@ -55,27 +55,27 @@ def build():
     subprocess.check_call(['wget', '-N', '-P', 'inputs', 'https://bitcoincore.org/cfields/osslsigncode-Backports-to-1.7.1.patch'])
     subprocess.check_call(["echo 'a8c4e9cafba922f89de0df1f2152e7be286aba73f78505169bc351a7938dd911 inputs/osslsigncode-Backports-to-1.7.1.patch' | sha256sum -c"], shell=True)
     subprocess.check_call(["echo 'f9a8cdb38b9c309326764ebc937cba1523a3a751a7ab05df3ecc99d18ae466c9 inputs/osslsigncode-1.7.1.tar.gz' | sha256sum -c"], shell=True)
-    subprocess.check_call(['make', '-C', '../particl-core/depends', 'download', 'SOURCES_PATH=' + os.getcwd() + '/cache/common'])
+    subprocess.check_call(['make', '-C', '../efin-core/depends', 'download', 'SOURCES_PATH=' + os.getcwd() + '/cache/common'])
 
     if args.linux:
         print('\nCompiling ' + args.version + ' Linux')
-        subprocess.check_call(['bin/gbuild', '--allow-sudo', '-j', args.jobs, '-m', args.memory, '--commit', 'particl-core='+args.commit, '--url', 'particl-core='+args.url, '../particl-core/contrib/gitian-descriptors/gitian-linux.yml'])
-        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-linux', '--destination', '../gitian.sigs/', '../particl-core/contrib/gitian-descriptors/gitian-linux.yml'])
-        subprocess.check_call('mv build/out/particl-*.tar.gz build/out/src/particl-*.tar.gz ../particl-binaries/'+args.version, shell=True)
+        subprocess.check_call(['bin/gbuild', '--allow-sudo', '-j', args.jobs, '-m', args.memory, '--commit', 'efin-core='+args.commit, '--url', 'efin-core='+args.url, '../efin-core/contrib/gitian-descriptors/gitian-linux.yml'])
+        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-linux', '--destination', '../gitian.sigs/', '../efin-core/contrib/gitian-descriptors/gitian-linux.yml'])
+        subprocess.check_call('mv build/out/efin-*.tar.gz build/out/src/efin-*.tar.gz ../efin-binaries/'+args.version, shell=True)
 
     if args.windows:
         print('\nCompiling ' + args.version + ' Windows')
-        subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'particl-core='+args.commit, '--url', 'particl-core='+args.url, '../particl-core/contrib/gitian-descriptors/gitian-win.yml'])
-        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-win-unsigned', '--destination', '../gitian.sigs/', '../particl-core/contrib/gitian-descriptors/gitian-win.yml'])
-        subprocess.check_call('mv build/out/particl-*-win-unsigned.tar.gz inputs/', shell=True)
-        subprocess.check_call('mv build/out/particl-*.zip build/out/particl-*.exe build/out/src/particl-*.tar.gz ../particl-binaries/'+args.version, shell=True)
+        subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'efin-core='+args.commit, '--url', 'efin-core='+args.url, '../efin-core/contrib/gitian-descriptors/gitian-win.yml'])
+        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-win-unsigned', '--destination', '../gitian.sigs/', '../efin-core/contrib/gitian-descriptors/gitian-win.yml'])
+        subprocess.check_call('mv build/out/efin-*-win-unsigned.tar.gz inputs/', shell=True)
+        subprocess.check_call('mv build/out/efin-*.zip build/out/efin-*.exe build/out/src/efin-*.tar.gz ../efin-binaries/'+args.version, shell=True)
 
     if args.macos:
         print('\nCompiling ' + args.version + ' MacOS')
-        subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'particl-core='+args.commit, '--url', 'particl-core='+args.url, '../particl-core/contrib/gitian-descriptors/gitian-osx.yml'])
-        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-osx-unsigned', '--destination', '../gitian.sigs/', '../particl-core/contrib/gitian-descriptors/gitian-osx.yml'])
-        subprocess.check_call('mv build/out/particl-*-osx-unsigned.tar.gz inputs/', shell=True)
-        subprocess.check_call('mv build/out/particl-*.tar.gz build/out/particl-*.dmg build/out/src/particl-*.tar.gz ../particl-binaries/'+args.version, shell=True)
+        subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'efin-core='+args.commit, '--url', 'efin-core='+args.url, '../efin-core/contrib/gitian-descriptors/gitian-osx.yml'])
+        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-osx-unsigned', '--destination', '../gitian.sigs/', '../efin-core/contrib/gitian-descriptors/gitian-osx.yml'])
+        subprocess.check_call('mv build/out/efin-*-osx-unsigned.tar.gz inputs/', shell=True)
+        subprocess.check_call('mv build/out/efin-*.tar.gz build/out/efin-*.dmg build/out/src/efin-*.tar.gz ../efin-binaries/'+args.version, shell=True)
 
     os.chdir(workdir)
 
@@ -94,18 +94,18 @@ def sign():
 
     if args.windows:
         print('\nSigning ' + args.version + ' Windows')
-        subprocess.check_call('cp inputs/particl-' + args.version + '-win-unsigned.tar.gz inputs/particl-win-unsigned.tar.gz', shell=True)
-        subprocess.check_call(['bin/gbuild', '--skip-image', '--upgrade', '--commit', 'signature='+args.commit, '../particl-core/contrib/gitian-descriptors/gitian-win-signer.yml'])
-        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-win-signed', '--destination', '../gitian.sigs/', '../particl-core/contrib/gitian-descriptors/gitian-win-signer.yml'])
-        subprocess.check_call('mv build/out/particl-*win64-setup.exe ../particl-binaries/'+args.version, shell=True)
-        subprocess.check_call('mv build/out/particl-*win32-setup.exe ../particl-binaries/'+args.version, shell=True)
+        subprocess.check_call('cp inputs/efin-' + args.version + '-win-unsigned.tar.gz inputs/efin-win-unsigned.tar.gz', shell=True)
+        subprocess.check_call(['bin/gbuild', '--skip-image', '--upgrade', '--commit', 'signature='+args.commit, '../efin-core/contrib/gitian-descriptors/gitian-win-signer.yml'])
+        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-win-signed', '--destination', '../gitian.sigs/', '../efin-core/contrib/gitian-descriptors/gitian-win-signer.yml'])
+        subprocess.check_call('mv build/out/efin-*win64-setup.exe ../efin-binaries/'+args.version, shell=True)
+        subprocess.check_call('mv build/out/efin-*win32-setup.exe ../efin-binaries/'+args.version, shell=True)
 
     if args.macos:
         print('\nSigning ' + args.version + ' MacOS')
-        subprocess.check_call('cp inputs/particl-' + args.version + '-osx-unsigned.tar.gz inputs/particl-osx-unsigned.tar.gz', shell=True)
-        subprocess.check_call(['bin/gbuild', '--skip-image', '--upgrade', '--commit', 'signature='+args.commit, '../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml'])
-        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-osx-signed', '--destination', '../gitian.sigs/', '../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml'])
-        subprocess.check_call('mv build/out/particl-osx-signed.dmg ../particl-binaries/'+args.version+'/particl-'+args.version+'-osx.dmg', shell=True)
+        subprocess.check_call('cp inputs/efin-' + args.version + '-osx-unsigned.tar.gz inputs/efin-osx-unsigned.tar.gz', shell=True)
+        subprocess.check_call(['bin/gbuild', '--skip-image', '--upgrade', '--commit', 'signature='+args.commit, '../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml'])
+        subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-osx-signed', '--destination', '../gitian.sigs/', '../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml'])
+        subprocess.check_call('mv build/out/efin-osx-signed.dmg ../efin-binaries/'+args.version+'/efin-'+args.version+'-osx.dmg', shell=True)
 
     os.chdir(workdir)
 
@@ -123,27 +123,27 @@ def verify():
     os.chdir('gitian-builder')
 
     print('\nVerifying v'+args.version+' Linux\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-linux', '../particl-core/contrib/gitian-descriptors/gitian-linux.yml']):
+    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-linux', '../efin-core/contrib/gitian-descriptors/gitian-linux.yml']):
         print('Verifying v'+args.version+' Linux FAILED\n')
         rc = 1
 
     print('\nVerifying v'+args.version+' Windows\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-unsigned', '../particl-core/contrib/gitian-descriptors/gitian-win.yml']):
+    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-unsigned', '../efin-core/contrib/gitian-descriptors/gitian-win.yml']):
         print('Verifying v'+args.version+' Windows FAILED\n')
         rc = 1
 
     print('\nVerifying v'+args.version+' MacOS\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-unsigned', '../particl-core/contrib/gitian-descriptors/gitian-osx.yml']):
+    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-unsigned', '../efin-core/contrib/gitian-descriptors/gitian-osx.yml']):
         print('Verifying v'+args.version+' MacOS FAILED\n')
         rc = 1
 
     print('\nVerifying v'+args.version+' Signed Windows\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-signed', '../particl-core/contrib/gitian-descriptors/gitian-win-signer.yml']):
+    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-signed', '../efin-core/contrib/gitian-descriptors/gitian-win-signer.yml']):
         print('Verifying v'+args.version+' Signed Windows FAILED\n')
         rc = 1
 
     print('\nVerifying v'+args.version+' Signed MacOS\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-signed', '../particl-core/contrib/gitian-descriptors/gitian-osx-signer.yml']):
+    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-signed', '../efin-core/contrib/gitian-descriptors/gitian-osx-signer.yml']):
         print('Verifying v'+args.version+' Signed MacOS FAILED\n')
         rc = 1
 
@@ -156,7 +156,7 @@ def main():
     parser = argparse.ArgumentParser(description='Script for running full Gitian builds.')
     parser.add_argument('-c', '--commit', action='store_true', dest='commit', help='Indicate that the version argument is for a commit or branch')
     parser.add_argument('-p', '--pull', action='store_true', dest='pull', help='Indicate that the version argument is the number of a github repository pull request')
-    parser.add_argument('-u', '--url', dest='url', default='https://github.com/particl/particl-core', help='Specify the URL of the repository. Default is %(default)s')
+    parser.add_argument('-u', '--url', dest='url', default='https://github.com/efin/efin-core', help='Specify the URL of the repository. Default is %(default)s')
     parser.add_argument('-v', '--verify', action='store_true', dest='verify', help='Verify the Gitian build')
     parser.add_argument('-b', '--build', action='store_true', dest='build', help='Do a Gitian build')
     parser.add_argument('-s', '--sign', action='store_true', dest='sign', help='Make signed binaries for Windows and MacOS')
@@ -230,7 +230,7 @@ def main():
         raise Exception('Cannot have both commit and pull')
     args.commit = ('' if args.commit else 'v') + args.version
 
-    os.chdir('particl-core')
+    os.chdir('efin-core')
     if args.pull:
         subprocess.check_call(['git', 'fetch', args.url, 'refs/pull/'+args.version+'/merge'])
         os.chdir('../gitian-builder/inputs/bitcoin')

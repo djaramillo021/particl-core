@@ -9,11 +9,11 @@
 
 import json
 
-from test_framework.test_particl import ParticlTestFramework
+from test_framework.test_efin import EfinTestFramework
 from test_framework.util import connect_nodes, assert_equal
 
 
-class TxIndexTest(ParticlTestFramework):
+class TxIndexTest(EfinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 4

@@ -42,19 +42,19 @@ static bool WalletAppInit(int argc, char* argv[])
         return false;
     }
     if (argc < 2 || HelpRequested(gArgs)) {
-        std::string usage = strprintf("%s particl-wallet version", PACKAGE_NAME) + " " + FormatFullVersion() + "\n\n" +
-                                      "wallet-tool is an offline tool for creating and interacting with Particl Core wallet files.\n" +
+        std::string usage = strprintf("%s efin-wallet version", PACKAGE_NAME) + " " + FormatFullVersion() + "\n\n" +
+                                      "wallet-tool is an offline tool for creating and interacting with Efin Core wallet files.\n" +
                                       "By default wallet-tool will act on wallets in the default mainnet wallet directory in the datadir.\n" +
                                       "To change the target wallet, use the -datadir, -wallet and -testnet/-regtest arguments.\n\n" +
                                       "Usage:\n" +
-                                     "  particl-wallet [options] <command>\n\n" +
+                                     "  efin-wallet [options] <command>\n\n" +
                                      gArgs.GetHelpMessage();
 
         fprintf(stdout, "%s", usage.c_str());
         return false;
     }
 
-    fParticlMode = !gArgs.GetBoolArg("-btcmode", false); // qa tests
+    fEfinMode = !gArgs.GetBoolArg("-btcmode", false); // qa tests
 
     // check for printtoconsole, allow -debug
     LogInstance().m_print_to_console = gArgs.GetBoolArg("-printtoconsole", gArgs.GetBoolArg("-debug", false));
@@ -65,10 +65,10 @@ static bool WalletAppInit(int argc, char* argv[])
     }
     // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
     SelectParams(gArgs.GetChainName());
-    if (!fParticlMode) {
+    if (!fEfinMode) {
         WITNESS_SCALE_FACTOR = WITNESS_SCALE_FACTOR_BTC;
         if (gArgs.GetBoolArg("-regtest", false)) {
-            ResetParams(CBaseChainParams::REGTEST, fParticlMode);
+            ResetParams(CBaseChainParams::REGTEST, fEfinMode);
         }
     }
 
@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
     }
 
     if (method.empty()) {
-        fprintf(stderr, "No method provided. Run `particl-wallet -help` for valid methods.\n");
+        fprintf(stderr, "No method provided. Run `efin-wallet -help` for valid methods.\n");
         return EXIT_FAILURE;
     }
 

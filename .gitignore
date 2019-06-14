@@ -1,14 +1,14 @@
 *.tar.gz
 
 *.exe
-src/particl
-src/particld
-src/particl-cli
-src/particl-tx
-src/particl-wallet
-src/test/test_particl
-src/test/test_particl_fuzzy
-src/qt/test/test_particl-qt
+src/efin
+src/efind
+src/efin-cli
+src/efin-tx
+src/efin-wallet
+src/test/test_efin
+src/test/test_efin_fuzzy
+src/qt/test/test_efin-qt
 
 # autoreconf
 src/Makefile.in
@@ -52,11 +52,11 @@ src/qt/bitcoin-qt.creator.user
 src/qt/bitcoin-qt.files
 src/qt/bitcoin-qt.includes
 
-src/qt/particl-qt.config
-src/qt/particl-qt.creator
-src/qt/particl-qt.creator.user
-src/qt/particl-qt.files
-src/qt/particl-qt.includes
+src/qt/efin-qt.config
+src/qt/efin-qt.creator
+src/qt/efin-qt.creator.user
+src/qt/efin-qt.files
+src/qt/efin-qt.includes
 
 .deps
 .dirstamp
@@ -92,13 +92,13 @@ src/qt/particl-qt.includes
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-particl-qt
-Particl-Qt.app
+efin-qt
+Efin-Qt.app
 background.tiff*
 
 # Unit-tests
 Makefile.test
-particl-qt_test
+efin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -111,7 +111,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_particl.coverage/
+test_efin.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -126,7 +126,7 @@ test/cache/*
 
 /doc/doxygen/
 
-libparticlconsensus.pc
+libefinconsensus.pc
 contrib/devtools/split-debug.sh
 
 # Output from running db4 installation

@@ -77,7 +77,7 @@ WalletTx MakeWalletTx(interfaces::Chain::Lock& locked_chain, CWallet& wallet, co
     for (const auto& txin : wtx.tx->vin) {
         result.txin_is_mine.emplace_back(wallet.IsMine(txin));
     }
-    if (wtx.tx->IsParticlVersion()) {
+    if (wtx.tx->IsEfinVersion()) {
         size_t nv = wtx.tx->GetNumVOuts();
         result.txout_is_mine.reserve(nv);
         result.txout_address.reserve(nv);
@@ -207,8 +207,8 @@ class WalletImpl : public Wallet
 public:
     explicit WalletImpl(const std::shared_ptr<CWallet>& wallet) : m_wallet(wallet)
     {
-        if (::IsParticlWallet(wallet.get())) {
-            m_wallet_part = GetParticlWallet(wallet.get());
+        if (::IsEfinWallet(wallet.get())) {
+            m_wallet_part = GetEfinWallet(wallet.get());
         }
     }
 
@@ -358,7 +358,7 @@ public:
         CAmount& new_fee,
         CMutableTransaction& mtx) override
     {
-        if (total_fee > 0 || ::IsParticlWallet(m_wallet.get())) {
+        if (total_fee > 0 || ::IsEfinWallet(m_wallet.get())) {
             return feebumper::CreateTotalBumpTransaction(m_wallet.get(), txid, coin_control, total_fee, errors, old_fee, new_fee, mtx) ==
                 feebumper::Result::OK;
         } else {
@@ -690,7 +690,7 @@ public:
         return MakeHandler(m_wallet_part->NotifyReservedBalanceChanged.connect(fn));
     }
 
-    bool IsParticlWallet() override
+    bool IsEfinWallet() override
     {
         return m_wallet_part;
     }
@@ -730,7 +730,7 @@ public:
         return m_wallet_part->GetAvailableBlindBalance(&coin_control);
     }
 
-    CHDWallet *getParticlWallet() override
+    CHDWallet *getEfinWallet() override
     {
         return m_wallet_part;
     }

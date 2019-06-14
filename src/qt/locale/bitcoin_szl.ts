@@ -66,12 +66,12 @@
         <translation>Adresy ôdbiyraniŏ</translation>
     </message>
     <message>
-        <source>These are your Particl addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Tukej sōm adresy Particl na kere posyłŏsz płaty. Dycki wybaduj wielość i adresã ôdbiyrŏcza przed posłaniym mōnet.</translation>
+        <source>These are your Efin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Tukej sōm adresy Efin na kere posyłŏsz płaty. Dycki wybaduj wielość i adresã ôdbiyrŏcza przed posłaniym mōnet.</translation>
     </message>
     <message>
-        <source>These are your Particl addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Tukej sōm adresy Particl do ôdbiyraniŏ płatōw. Zalycŏ sie używaniŏ nowych adres ôdbiorczych dlŏ kożdyj transakcyje.</translation>
+        <source>These are your Efin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Tukej sōm adresy Efin do ôdbiyraniŏ płatōw. Zalycŏ sie używaniŏ nowych adres ôdbiorczych dlŏ kożdyj transakcyje.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -176,8 +176,8 @@
         <translation>Przituplikuj szyfrowanie portmanyja</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR PARTICL&lt;/b&gt;!</source>
-        <translation>Pozōr: jeźli zaszyfrujesz swōj portmanyj i stracisz hasło &lt;b&gt;STRACISZ WSZYJSKE SWOJE PARTICLY&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EFIN&lt;/b&gt;!</source>
+        <translation>Pozōr: jeźli zaszyfrujesz swōj portmanyj i stracisz hasło &lt;b&gt;STRACISZ WSZYJSKE SWOJE EFINY&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -188,8 +188,8 @@
         <translation>Portmanyj zaszyfrowany</translation>
     </message>
     <message>
-        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your particl from being stolen by malware infecting your computer.</source>
-        <translation>%1 zawrzi sie coby dokōńczyć proces szyfrowaniŏ. Pamiyntej, iże szyfrowanie portmanyja ganc niy zabezpieczŏ Twojich particlów przed chabiyniym bez wirusy abo trojany mogōnce zakażać Twōj kōmputer.</translation>
+        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your efin from being stolen by malware infecting your computer.</source>
+        <translation>%1 zawrzi sie coby dokōńczyć proces szyfrowaniŏ. Pamiyntej, iże szyfrowanie portmanyja ganc niy zabezpieczŏ Twojich efinów przed chabiyniym bez wirusy abo trojany mogōnce zakażać Twōj kōmputer.</translation>
     </message>
     <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
@@ -354,8 +354,8 @@
         <translation>Proxy je &lt;b&gt;zapuszczone&lt;/b&gt;: %1</translation>
     </message>
     <message>
-        <source>Send coins to a Particl address</source>
-        <translation>Poślij mōnety na adresã Particl.</translation>
+        <source>Send coins to a Efin address</source>
+        <translation>Poślij mōnety na adresã Efin.</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -378,8 +378,8 @@
         <translation>&amp;Weryfikuj wiadōmość...</translation>
     </message>
     <message>
-        <source>Particl.</source>
-        <translation>Particl.</translation>
+        <source>Efin.</source>
+        <translation>Efin.</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -406,12 +406,12 @@
         <translation>Szyfruj klucze prywatne, kere sōm we twojim portmanyju</translation>
     </message>
     <message>
-        <source>Sign messages with your Particl addresses to prove you own them</source>
+        <source>Sign messages with your Efin addresses to prove you own them</source>
         <translation>Podpisz wiadōmości swojōm adresōm coby dowiyść jejich posiadanie</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Particl addresses</source>
-        <translation>Zweryfikuj wiadōmość, coby wejzdrzeć sie, iże ôstała podpisanŏ podanōm adresōm Particl.</translation>
+        <source>Verify messages to ensure they were signed with specified Efin addresses</source>
+        <translation>Zweryfikuj wiadōmość, coby wejzdrzeć sie, iże ôstała podpisanŏ podanōm adresōm Efin.</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -430,8 +430,8 @@
         <translation>Lajsta szkart</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and particl: URIs)</source>
-        <translation>Żōndej płatu (gyneruje kod QR jak tyż URI particl:)</translation>
+        <source>Request payments (generates QR codes and efin: URIs)</source>
+        <translation>Żōndej płatu (gyneruje kod QR jak tyż URI efin:)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -442,16 +442,16 @@
         <translation>Pokŏż wykŏz adres i etyket użytych do ôdbiyraniŏ</translation>
     </message>
     <message>
-        <source>Open a particl: URI or payment request</source>
-        <translation>Ôdewrzij URI particl: abo żōndanie płatu</translation>
+        <source>Open a efin: URI or payment request</source>
+        <translation>Ôdewrzij URI efin: abo żōndanie płatu</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>Ôp&amp;cyje piski kōmynd</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Particl network</source>
-        <translation><numerusform>%n aktywne połōnczynie do necu Particl.</numerusform><numerusform>%n aktywnych połōnczyń do necu Particl.</numerusform><numerusform>%n aktywnych skuplowań do necu Particl.</numerusform></translation>
+        <source>%n active connection(s) to Efin network</source>
+        <translation><numerusform>%n aktywne połōnczynie do necu Efin.</numerusform><numerusform>%n aktywnych połōnczyń do necu Efin.</numerusform><numerusform>%n aktywnych skuplowań do necu Efin.</numerusform></translation>
     </message>
     <message>
         <source>Indexing blocks on disk...</source>
@@ -494,7 +494,7 @@
         <translation>Terŏźny</translation>
     </message>
     <message>
-        <source>Show the %1 help message to get a list with possible Particl command-line options</source>
+        <source>Show the %1 help message to get a list with possible Efin command-line options</source>
         <translation>Pokŏż pōmoc %1 coby zobŏczyć wykŏz wszyjskich ôpcyji piski nakŏzań.</translation>
     </message>
     <message>
@@ -566,8 +566,8 @@
         <translation>Portmanyj je &lt;b&gt;zaszyfrowany&lt;/b&gt; i terŏźnie &lt;b&gt;zaszperowany&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Particl can no longer continue safely and will quit.</source>
-        <translation>Przitrefiōł sie krytyczny feler. Particl niy poradzi kōntynuować bezpiycznie i ôstanie zawrzity.</translation>
+        <source>A fatal error occurred. Efin can no longer continue safely and will quit.</source>
+        <translation>Przitrefiōł sie krytyczny feler. Efin niy poradzi kōntynuować bezpiycznie i ôstanie zawrzity.</translation>
     </message>
 </context>
 <context>
@@ -756,8 +756,8 @@
         <translation>Edytuj adresã posyłaniŏ</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Particl address.</source>
-        <translation>Wkludzōnŏ adresa "%1" niyma nŏleżnōm adresōm Particl.</translation>
+        <source>The entered address "%1" is not a valid Efin address.</source>
+        <translation>Wkludzōnŏ adresa "%1" niyma nŏleżnōm adresōm Efin.</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
@@ -849,8 +849,8 @@
         <translation>Użyj ôbranego folderu datōw</translation>
     </message>
     <message>
-        <source>Particl.</source>
-        <translation>Particl.</translation>
+        <source>Efin.</source>
+        <translation>Efin.</translation>
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
@@ -861,8 +861,8 @@
         <translation>Kole %1 GB datōw ôstanie spamiyntane w tym katalogu.</translation>
     </message>
     <message>
-        <source>%1 will download and store a copy of the Particl block chain.</source>
-        <translation>%1 sebiere i spamiyntŏ kopijõ kety blokōw Particl.</translation>
+        <source>%1 will download and store a copy of the Efin block chain.</source>
+        <translation>%1 sebiere i spamiyntŏ kopijõ kety blokōw Efin.</translation>
     </message>
     <message>
         <source>The wallet will also be stored in this directory.</source>
@@ -892,12 +892,12 @@
         <translation>Formular</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the particl network, as detailed below.</source>
-        <translation>Świyże transakcyje mogōm niy być jeszcze widzialne, a tedyć saldo portmanyja może być niynŏleżne. Te detale bydōm nŏleżne, kej portmanyj zakōńczy synchrōnizacyjõ z necym particl, zgodnie z miyniōnym ôpisym.</translation>
+        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the efin network, as detailed below.</source>
+        <translation>Świyże transakcyje mogōm niy być jeszcze widzialne, a tedyć saldo portmanyja może być niynŏleżne. Te detale bydōm nŏleżne, kej portmanyj zakōńczy synchrōnizacyjõ z necym efin, zgodnie z miyniōnym ôpisym.</translation>
     </message>
     <message>
-        <source>Attempting to spend particl that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Prōba wydaniŏ particlōw kere niy sōm jeszcze wyświytlōne za transakcyjŏ ôstanie ôdciepniyntŏ bez nec.</translation>
+        <source>Attempting to spend efin that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <translation>Prōba wydaniŏ efinōw kere niy sōm jeszcze wyświytlōne za transakcyjŏ ôstanie ôdciepniyntŏ bez nec.</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1062,8 +1062,8 @@
         <translation>&amp;Wydej niyprzituplowanõ wydŏwkã</translation>
     </message>
     <message>
-        <source>Automatically open the Particl client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Autōmatycznie ôdewrzij port klijynta Particl na routerze. Ta ôpcyjŏ funguje ino jeźli twōj router podpiyrŏ UPnP i je ôno zapuszczone.</translation>
+        <source>Automatically open the Efin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Autōmatycznie ôdewrzij port klijynta Efin na routerze. Ta ôpcyjŏ funguje ino jeźli twōj router podpiyrŏ UPnP i je ôno zapuszczone.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1078,8 +1078,8 @@
         <translation>Zwōl na skuplowania przichodzōnce</translation>
     </message>
     <message>
-        <source>Connect to the Particl network through a SOCKS5 proxy.</source>
-        <translation>Skupluj sie z necym Particl bez SOCKS5 proxy.</translation>
+        <source>Connect to the Efin network through a SOCKS5 proxy.</source>
+        <translation>Skupluj sie z necym Efin bez SOCKS5 proxy.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
@@ -1110,8 +1110,8 @@
         <translation>Tor</translation>
     </message>
     <message>
-        <source>Connect to the Particl network through a separate SOCKS5 proxy for Tor hidden services.</source>
-        <translation>Skupluj sie z necym Particl ze pōmocōm ôsobnego proxy SOCKS5 dlŏ necu TOR</translation>
+        <source>Connect to the Efin network through a separate SOCKS5 proxy for Tor hidden services.</source>
+        <translation>Skupluj sie z necym Efin ze pōmocōm ôsobnego proxy SOCKS5 dlŏ necu TOR</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -1157,8 +1157,8 @@
         <translation>Formular</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Particl network after a connection is established, but this process has not completed yet.</source>
-        <translation>Wyświytlanŏ informacyjŏ może być niyterŏźnŏ. Twōj portmanyj synchrōnizuje sie autōmatycznie z necym particl zarŏz po tym, jak zrychtowane je skuplowanie, ale proces tyn niy ôstoł jeszcze skōńczōny.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Efin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Wyświytlanŏ informacyjŏ może być niyterŏźnŏ. Twōj portmanyj synchrōnizuje sie autōmatycznie z necym efin zarŏz po tym, jak zrychtowane je skuplowanie, ale proces tyn niy ôstoł jeszcze skōńczōny.</translation>
     </message>
     <message>
         <source>Available:</source>
@@ -1188,8 +1188,8 @@
         <translation>Bedynōng URI</translation>
     </message>
     <message>
-        <source>'particl://' is not a valid URI. Use 'particl:' instead.</source>
-        <translation>'particl://' to niyma nŏleżne URI. Użyj 'particl:'.</translation>
+        <source>'efin://' is not a valid URI. Use 'efin:' instead.</source>
+        <translation>'efin://' to niyma nŏleżne URI. Użyj 'efin:'.</translation>
     </message>
     <message>
         <source>Payment request network doesn't match client network.</source>
@@ -1230,8 +1230,8 @@
         <translation>Kwota</translation>
     </message>
     <message>
-        <source>Enter a Particl address (e.g. %1)</source>
-        <translation>Wkludź adresã Particl (bp. %1)</translation>
+        <source>Enter a Efin address (e.g. %1)</source>
+        <translation>Wkludź adresã Efin (bp. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -1454,8 +1454,8 @@
         <translation>&amp;Etyketa:</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Particl network.</source>
-        <translation>Ôpcyjōnalnŏ wiadōmość do prziwstōniŏ do żōndaniŏ płatu, kerŏ bydzie wyświytlanŏ, kej żōndanie ôstanie ôdewrzōne. Napōmniynie: wiadōmość ta niy ôstanie wysłanŏ z płatym w nec Particl.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Efin network.</source>
+        <translation>Ôpcyjōnalnŏ wiadōmość do prziwstōniŏ do żōndaniŏ płatu, kerŏ bydzie wyświytlanŏ, kej żōndanie ôstanie ôdewrzōne. Napōmniynie: wiadōmość ta niy ôstanie wysłanŏ z płatym w nec Efin.</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1659,8 +1659,8 @@
         <translation>Utworzynie transakcyje niy podarziło sie!</translation>
     </message>
     <message>
-        <source>Warning: Invalid Particl address</source>
-        <translation>Pozōr: niynŏleżnŏ adresa Particl.</translation>
+        <source>Warning: Invalid Efin address</source>
+        <translation>Pozōr: niynŏleżnŏ adresa Efin.</translation>
     </message>
     <message>
         <source>Warning: Unknown change address</source>
@@ -1698,8 +1698,8 @@
         <translation>Wiadōmość:</translation>
     </message>
     <message>
-        <source>A message that was attached to the particl: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Particl network.</source>
-        <translation>Wiadōmość, kerŏ ôstała prziwstōnŏ do URI particl:, kerŏ bydzie przechowowanŏ z transakcyjōm w cylach informacyjnych. Napōmniynie: Ta wiadōmość niy bydzie rozszyrzowanŏ w necu Particl.</translation>
+        <source>A message that was attached to the efin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Efin network.</source>
+        <translation>Wiadōmość, kerŏ ôstała prziwstōnŏ do URI efin:, kerŏ bydzie przechowowanŏ z transakcyjōm w cylach informacyjnych. Napōmniynie: Ta wiadōmość niy bydzie rozszyrzowanŏ w necu Efin.</translation>
     </message>
     </context>
 <context>
@@ -1960,8 +1960,8 @@
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Particl Core</source>
-        <translation>Particl Core</translation>
+        <source>Efin Core</source>
+        <translation>Efin Core</translation>
     </message>
     <message>
         <source>The %s developers</source>

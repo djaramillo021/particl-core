@@ -1,9 +1,9 @@
-// Copyright (c) 2017-2019 The Particl Core developers
+// Copyright (c) 2017-2019 The Efin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_ANON_H
-#define PARTICL_ANON_H
+#ifndef EFIN_ANON_H
+#define EFIN_ANON_H
 
 #include <stdint.h>
 
@@ -38,4 +38,4 @@ bool RewindToCheckpoint(int nCheckPointHeight, int &nBlocks, std::string &sError
 bool RewindRangeProof(const std::vector<uint8_t> &rangeproof, const std::vector<uint8_t> &commitment, const uint256 &nonce,
                       std::vector<uint8_t> &blind_out, CAmount &value_out);
 
-#endif  // PARTICL_ANON_H
+#endif  // EFIN_ANON_H

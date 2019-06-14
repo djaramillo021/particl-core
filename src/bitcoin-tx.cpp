@@ -100,14 +100,14 @@ static int AppInitRawTx(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    fParticlMode = !gArgs.GetBoolArg("-btcmode", false); // qa tests
+    fEfinMode = !gArgs.GetBoolArg("-btcmode", false); // qa tests
     fCreateBlank = gArgs.GetBoolArg("-create", false);
 
     if (argc < 2 || HelpRequested(gArgs)) {
         // First part of help message is specific to this utility
-        std::string strUsage = PACKAGE_NAME " particl-tx utility version " + FormatFullVersion() + "\n\n" +
-            "Usage:  particl-tx [options] <hex-tx> [commands]  Update hex-encoded bitcoin transaction\n" +
-            "or:     particl-tx [options] -create [commands]   Create hex-encoded bitcoin transaction\n" +
+        std::string strUsage = PACKAGE_NAME " efin-tx utility version " + FormatFullVersion() + "\n\n" +
+            "Usage:  efin-tx [options] <hex-tx> [commands]  Update hex-encoded bitcoin transaction\n" +
+            "or:     efin-tx [options] -create [commands]   Create hex-encoded bitcoin transaction\n" +
             "\n";
         strUsage += gArgs.GetHelpMessage();
 
@@ -200,10 +200,10 @@ static CAmount ExtractAndValidateValue(const std::string& strValue)
 static void MutateTxVersion(CMutableTransaction& tx, const std::string& cmdVal)
 {
     int64_t newVersion;
-    if (!ParseInt64(cmdVal, &newVersion) || newVersion < 1 || newVersion > CTransaction::MAX_STANDARD_PARTICL_VERSION)
+    if (!ParseInt64(cmdVal, &newVersion) || newVersion < 1 || newVersion > CTransaction::MAX_STANDARD_EFIN_VERSION)
         throw std::runtime_error("Invalid TX version requested: '" + cmdVal + "'");
 
-    if (!tx.IsParticlVersion() && IsParticlTxVersion(newVersion)) {
+    if (!tx.IsEfinVersion() && IsEfinTxVersion(newVersion)) {
         for (const auto& txout : tx.vout) {
             tx.vpout.push_back(MAKE_OUTPUT<CTxOutStandard>(txout.nValue, txout.scriptPubKey));
         }
@@ -218,7 +218,7 @@ static void MutateTxVersion(CMutableTransaction& tx, const std::string& cmdVal)
             txin.scriptSig.clear();
         }
     } else
-    if (tx.IsParticlVersion() && !IsParticlTxVersion(newVersion)) {
+    if (tx.IsEfinVersion() && !IsEfinTxVersion(newVersion)) {
         for (const auto &txout : tx.vpout) {
             if (!txout->IsStandardOutput()) {
                 throw std::runtime_error("Can't convert non-standard output.");
@@ -355,7 +355,7 @@ static void MutateTxAddOutAddr(CMutableTransaction& tx, const std::string& strIn
     CScript scriptPubKey = GetScriptForDestination(destination);
 
     // construct TxOut, append to transaction output list
-    if (tx.IsParticlVersion())
+    if (tx.IsEfinVersion())
     {
         if (destination.type() == typeid(CStealthAddress))
         {
@@ -419,7 +419,7 @@ static void MutateTxAddOutPubKey(CMutableTransaction& tx, const std::string& str
     }
 
     // construct TxOut, append to transaction output list
-    if (tx.IsParticlVersion())
+    if (tx.IsEfinVersion())
     {
         tx.vpout.push_back(MAKE_OUTPUT<CTxOutStandard>(value, scriptPubKey));
         return;
@@ -499,7 +499,7 @@ static void MutateTxAddOutMultiSig(CMutableTransaction& tx, const std::string& s
     }
 
     // construct TxOut, append to transaction output list
-    if (tx.IsParticlVersion())
+    if (tx.IsEfinVersion())
     {
         tx.vpout.push_back(MAKE_OUTPUT<CTxOutStandard>(value, scriptPubKey));
         return;
@@ -531,7 +531,7 @@ static void MutateTxAddOutData(CMutableTransaction& tx, const std::string& strIn
 
     std::vector<unsigned char> data = ParseHex(strData);
 
-    if (tx.IsParticlVersion())
+    if (tx.IsEfinVersion())
     {
         // TODO OUTPUT_DATA
         tx.vpout.push_back(MAKE_OUTPUT<CTxOutStandard>(value, CScript() << OP_RETURN << data));
@@ -582,7 +582,7 @@ static void MutateTxAddOutScript(CMutableTransaction& tx, const std::string& str
     }
 
     // construct TxOut, append to transaction output list
-    if (tx.IsParticlVersion())
+    if (tx.IsEfinVersion())
     {
         tx.vpout.push_back(MAKE_OUTPUT<CTxOutStandard>(value, scriptPubKey));
         return;
@@ -611,7 +611,7 @@ static void MutateTxDelOutput(CMutableTransaction& tx, const std::string& strOut
         throw std::runtime_error("Invalid TX output index '" + strOutIdx + "'");
     }
 
-    if (tx.IsParticlVersion()) {
+    if (tx.IsEfinVersion()) {
         // delete output from transaction
         tx.vpout.erase(tx.vpout.begin() + outIdx);
         return;
@@ -765,7 +765,7 @@ static void MutateTxSign(CMutableTransaction& tx, const std::string& flagStr)
         const CScript& prevPubKey = coin.out.scriptPubKey;
         const CAmount& amount = coin.out.nValue;
 
-        if (tx.IsParticlVersion() && amount == 0)
+        if (tx.IsEfinVersion() && amount == 0)
             throw std::runtime_error("expected amount for prevtx");
 
         std::vector<uint8_t> vchAmount(8);
@@ -782,8 +782,8 @@ static void MutateTxSign(CMutableTransaction& tx, const std::string& flagStr)
 
 static void MutateTxAddOutBlind(CMutableTransaction& tx, const std::string& strInput)
 {
-    if (!tx.IsParticlVersion())
-        throw std::runtime_error("tx not particl version.");
+    if (!tx.IsEfinVersion())
+        throw std::runtime_error("tx not efin version.");
     // separate COMMITMENT:SCRIPT:RANGEPROOF[:DATA]
     std::vector<std::string> vStrInputParts;
     boost::split(vStrInputParts, strInput, boost::is_any_of(":"));
@@ -828,8 +828,8 @@ static void MutateTxAddOutBlind(CMutableTransaction& tx, const std::string& strI
 
 static void MutateTxAddOutDataType(CMutableTransaction& tx, const std::string& strInput)
 {
-    if (!tx.IsParticlVersion())
-        throw std::runtime_error("tx not particl version.");
+    if (!tx.IsEfinVersion())
+        throw std::runtime_error("tx not efin version.");
     if (!IsHex(strInput))
         throw std::runtime_error("invalid TX output data");
 
@@ -976,7 +976,7 @@ static int CommandLineRawTx(int argc, char* argv[])
         }
 
         CMutableTransaction tx;
-        tx.nVersion = CTransaction::CURRENT_PARTICL_VERSION;
+        tx.nVersion = CTransaction::CURRENT_EFIN_VERSION;
         int startArg;
 
         if (!fCreateBlank) {

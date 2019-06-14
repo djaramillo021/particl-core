@@ -91,8 +91,8 @@ void EnsureWalletIsUnlocked(const CWallet* pwallet)
     if (pwallet->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
 
-    if (IsParticlWallet(pwallet)
-        && GetParticlWallet(pwallet)->fUnlockForStakingOnly)
+    if (IsEfinWallet(pwallet)
+        && GetEfinWallet(pwallet)->fUnlockForStakingOnly)
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Wallet is unlocked for staking only.");
 }
 
@@ -213,7 +213,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() > 4)
         throw std::runtime_error(
             RPCHelpMan{"getnewaddress",
-                "\nReturns a new Particl address for receiving payments.\n"
+                "\nReturns a new Efin address for receiving payments.\n"
                 "If 'label' is specified, it is added to the address book \n"
                 "so payments received with the address will be associated with 'label'.\n",
                 {
@@ -224,7 +224,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
                     //{"address_type", RPCArg::Type::STR, /* default */ "set by -addresstype", "The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
                 },
                 RPCResult{
-            "\"address\"    (string) The new particl address\n"
+            "\"address\"    (string) The new efin address\n"
                 },
                 RPCExamples{
                     HelpExampleCli("getnewaddress", "")
@@ -232,7 +232,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
                 },
             }.ToString());
 
-    if (!IsParticlWallet(pwallet)) {
+    if (!IsEfinWallet(pwallet)) {
         LOCK(pwallet->cs_wallet);
         if (!pwallet->CanGetAddresses()) {
             throw JSONRPCError(RPC_WALLET_ERROR, "Error: This wallet has no available keys");
@@ -244,7 +244,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
     if (!request.params[0].isNull())
         label = LabelFromValue(request.params[0]);
 
-    if (IsParticlWallet(pwallet)) {
+    if (IsEfinWallet(pwallet)) {
         CKeyID keyID;
 
         bool fBech32 = request.params.size() > 1 ? GetBool(request.params[1]) : false;
@@ -252,7 +252,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
         bool f256bit = request.params.size() > 3 ? GetBool(request.params[3]) : false;
 
         CPubKey newKey;
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+        CHDWallet *phdw = GetEfinWallet(pwallet);
         {
             //LOCK2(cs_main, pwallet->cs_wallet);
             LOCK(cs_main);
@@ -319,7 +319,7 @@ static UniValue getrawchangeaddress(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() > 1)
         throw std::runtime_error(
             RPCHelpMan{"getrawchangeaddress",
-                "\nReturns a new Particl address, for receiving change.\n"
+                "\nReturns a new Efin address, for receiving change.\n"
                 "This is for use with raw transactions, NOT normal use.\n",
                 {
                     {"address_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
@@ -335,8 +335,8 @@ static UniValue getrawchangeaddress(const JSONRPCRequest& request)
 
     LOCK(pwallet->cs_wallet);
 
-    if (IsParticlWallet(pwallet)) {
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+    if (IsEfinWallet(pwallet)) {
+        CHDWallet *phdw = GetEfinWallet(pwallet);
         CPubKey pkOut;
 
         if (0 != phdw->NewKeyFromAccount(pkOut, true)) {
@@ -388,7 +388,7 @@ static UniValue setlabel(const JSONRPCRequest& request)
             RPCHelpMan{"setlabel",
                 "\nSets the label associated with the given address.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "The particl address to be associated with a label."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "The efin address to be associated with a label."},
                     {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "The label to assign to the address."},
                 },
                 RPCResults{},
@@ -402,7 +402,7 @@ static UniValue setlabel(const JSONRPCRequest& request)
 
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
     }
 
     std::string label = LabelFromValue(request.params[1]);
@@ -473,7 +473,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
                 "\nSend an amount to a given address." +
                     HelpRequiringPassphrase(pwallet) + "\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The particl address to send to."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The efin address to send to."},
                     {"amount", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The amount in " + CURRENCY_UNIT + " to send. eg 0.1"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A comment used to store what the transaction is for.\n"
             "                             This is not part of the transaction, just kept in your wallet."},
@@ -481,7 +481,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
             "                             to which you're sending the transaction. This is not part of the \n"
             "                             transaction, just kept in your wallet."},
                     {"subtractfeefromamount", RPCArg::Type::BOOL, /* default */ "false", "The fee will be deducted from the amount being sent.\n"
-            "                             The recipient will receive less particl than you enter in the amount field."},
+            "                             The recipient will receive less efin than you enter in the amount field."},
                     {"narration", RPCArg::Type::STR, /* default */ "", "Up to 24 characters sent with the transaction.\n"
             "                             Plaintext if sending to standard address type, encrypted when sending to stealthaddresses."},
                     {"replaceable", RPCArg::Type::BOOL, /* default */ "fallback to wallet's default", "Allow this transaction to be replaced by a transaction with higher fees via BIP 125"},
@@ -546,7 +546,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
         }
     }
 
-    if (IsParticlWallet(pwallet)) {
+    if (IsEfinWallet(pwallet)) {
         JSONRPCRequest newRequest;
         newRequest.fHelp = false;
         newRequest.fSkipBlock = true; // already blocked in this function
@@ -637,7 +637,7 @@ static UniValue listaddressgroupings(const JSONRPCRequest& request)
             "[\n"
             "  [\n"
             "    [\n"
-            "      \"address\",            (string) The particl address\n"
+            "      \"address\",            (string) The efin address\n"
             "      amount,                 (numeric) The amount in " + CURRENCY_UNIT + "\n"
             "      \"label\"               (string, optional) The label\n"
             "    ]\n"
@@ -695,7 +695,7 @@ static UniValue signmessage(const JSONRPCRequest& request)
                 "\nSign a message with the private key of an address" +
                     HelpRequiringPassphrase(pwallet) + "\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The particl address to use for the private key."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The efin address to use for the private key."},
                     {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message to create a signature of."},
                 },
                 RPCResult{
@@ -769,7 +769,7 @@ static UniValue getreceivedbyaddress(const JSONRPCRequest& request)
             RPCHelpMan{"getreceivedbyaddress",
                 "\nReturns the total amount received by the given address in transactions with at least minconf confirmations.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The particl address for transactions."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The efin address for transactions."},
                     {"minconf", RPCArg::Type::NUM, /* default */ "1", "Only include transactions confirmed at least this many times."},
                 },
                 RPCResult{
@@ -797,7 +797,7 @@ static UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     // Bitcoin address
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Particl address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Efin address");
     }
     CScript scriptPubKey = GetScriptForDestination(dest);
     if (!IsMine(*pwallet, scriptPubKey)) {
@@ -814,11 +814,11 @@ static UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     for (const std::pair<const uint256, CWalletTx>& pairWtx : pwallet->mapWallet) {
         const CWalletTx& wtx = pairWtx.second;
 
-        if ((!fParticlWallet && wtx.IsCoinBase()) || !locked_chain->checkFinalTx(*wtx.tx)) {
+        if ((!fEfinWallet && wtx.IsCoinBase()) || !locked_chain->checkFinalTx(*wtx.tx)) {
             continue;
         }
 
-        if (fParticlWallet) {
+        if (fEfinWallet) {
             for (auto &txout : wtx.tx->vpout) {
                 if (txout->IsStandardOutput()
                     && *txout->GetPScriptPubKey() == scriptPubKey) {
@@ -890,11 +890,11 @@ static UniValue getreceivedbylabel(const JSONRPCRequest& request)
     CAmount nAmount = 0;
     for (const std::pair<const uint256, CWalletTx>& pairWtx : pwallet->mapWallet) {
         const CWalletTx& wtx = pairWtx.second;
-        if ((!fParticlWallet && wtx.IsCoinBase()) || !locked_chain->checkFinalTx(*wtx.tx)) {
+        if ((!fEfinWallet && wtx.IsCoinBase()) || !locked_chain->checkFinalTx(*wtx.tx)) {
             continue;
         }
 
-        if (fParticlWallet) {
+        if (fEfinWallet) {
             for (auto &txout : wtx.tx->vpout) {
                 CTxDestination address;
                 if (txout->IsStandardOutput()
@@ -1023,14 +1023,14 @@ static UniValue sendmany(const JSONRPCRequest& request)
                     {"dummy", RPCArg::Type::STR, RPCArg::Optional::NO, "Must be set to \"\" for backwards compatibility.", "\"\""},
                     {"amounts", RPCArg::Type::OBJ, RPCArg::Optional::NO, "A json object with addresses and amounts",
                         {
-                            {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The particl address is the key, the numeric amount (can be string) in " + CURRENCY_UNIT + " is the value"},
+                            {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The efin address is the key, the numeric amount (can be string) in " + CURRENCY_UNIT + " is the value"},
                         },
                     },
                     {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED_NAMED_ARG, "Ignored dummy value"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A comment"},
                     {"subtractfeefrom", RPCArg::Type::ARR, RPCArg::Optional::OMITTED_NAMED_ARG, "A json array with addresses.\n"
             "                           The fee will be equally deducted from the amount of each selected address.\n"
-            "                           Those recipients will receive less particl than you enter in their corresponding amount field.\n"
+            "                           Those recipients will receive less efin than you enter in their corresponding amount field.\n"
             "                           If no addresses are specified here, the sender pays the fee.",
                         {
                             {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Subtract fee from this address"},
@@ -1101,7 +1101,7 @@ static UniValue sendmany(const JSONRPCRequest& request)
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid estimate_mode parameter");
         }
     }
-    if (IsParticlWallet(pwallet)) {
+    if (IsEfinWallet(pwallet)) {
         JSONRPCRequest newRequest;
         newRequest.fHelp = false;
         newRequest.fSkipBlock = true; // already blocked in this function
@@ -1175,7 +1175,7 @@ static UniValue sendmany(const JSONRPCRequest& request)
     for (const std::string& name_ : keys) {
         CTxDestination dest = DecodeDestination(name_);
         if (!IsValidDestination(dest)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl address: ") + name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin address: ") + name_);
         }
 
         if (destinations.count(dest)) {
@@ -1235,15 +1235,15 @@ static UniValue addmultisigaddress(const JSONRPCRequest& request)
         std::string msg =
             RPCHelpMan{"addmultisigaddress",
                 "\nAdd a nrequired-to-sign multisignature address to the wallet. Requires a new wallet backup.\n"
-                "Each key is a Particl address or hex-encoded public key.\n"
+                "Each key is a Efin address or hex-encoded public key.\n"
                 "This functionality is only intended for use with non-watchonly addresses.\n"
                 "See `importaddress` for watchonly p2sh address support.\n"
                 "If 'label' is specified, assign address to that label.\n",
                 {
                     {"nrequired", RPCArg::Type::NUM, RPCArg::Optional::NO, "The number of required signatures out of the n keys or addresses."},
-                    {"keys", RPCArg::Type::ARR, RPCArg::Optional::NO, "A json array of particl addresses or hex-encoded public keys",
+                    {"keys", RPCArg::Type::ARR, RPCArg::Optional::NO, "A json array of efin addresses or hex-encoded public keys",
                         {
-                            {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "particl address or hex-encoded public key"},
+                            {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "efin address or hex-encoded public key"},
                         },
                         },
                     {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A label to assign the addresses to."},
@@ -1288,7 +1288,7 @@ static UniValue addmultisigaddress(const JSONRPCRequest& request)
     }
 
     OutputType output_type = pwallet->m_default_address_type;
-    if (!fParticlMode)
+    if (!fEfinMode)
     if (!request.params[3].isNull()) {
         if (!ParseOutputType(request.params[3].get_str(), output_type)) {
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Unknown address type '%s'", request.params[3].get_str()));
@@ -1300,8 +1300,8 @@ static UniValue addmultisigaddress(const JSONRPCRequest& request)
     CTxDestination dest = AddAndGetDestinationForScript(*pwallet, inner, output_type);
 
     UniValue result(UniValue::VOBJ);
-    bool fbech32 = fParticlMode && request.params.size() > 3 ? request.params[3].get_bool() : false;
-    bool f256Hash = fParticlMode && request.params.size() > 4 ? request.params[4].get_bool() : false;
+    bool fbech32 = fEfinMode && request.params.size() > 3 ? request.params[3].get_bool() : false;
+    bool f256Hash = fEfinMode && request.params.size() > 4 ? request.params[4].get_bool() : false;
 
     if (f256Hash) {
         CScriptID256 innerID;
@@ -1672,11 +1672,11 @@ static void ListTransactions(interfaces::Chain::Lock& locked_chain, CWallet* con
                 entry.pushKV("involvesWatchonly", true);
             }
 
-            if (fParticlWallet
+            if (fEfinWallet
                 && r.destination.type() == typeid(PKHash)) {
                 CStealthAddress sx;
                 CKeyID idK = CKeyID(boost::get<PKHash>(r.destination));
-                if (GetParticlWallet(pwallet)->GetStealthLinked(idK, sx)) {
+                if (GetEfinWallet(pwallet)->GetStealthLinked(idK, sx)) {
                     entry.pushKV("stealth_address", sx.Encoded());
                 }
             }
@@ -1692,7 +1692,7 @@ static void ListTransactions(interfaces::Chain::Lock& locked_chain, CWallet* con
                 if (wtx.IsImmatureCoinBase(locked_chain)) {
                     entry.pushKV("category", "immature");
                 } else {
-                    entry.pushKV("category", (fParticlMode ? "coinbase" : "generate"));
+                    entry.pushKV("category", (fEfinMode ? "coinbase" : "generate"));
                 }
             } else {
                 entry.pushKV("category", "receive");
@@ -1899,7 +1899,7 @@ UniValue listtransactions(const JSONRPCRequest& request)
                 RPCResult{
             "[\n"
             "  {\n"
-            "    \"address\":\"address\",    (string) The particl address of the transaction.\n"
+            "    \"address\":\"address\",    (string) The efin address of the transaction.\n"
             "    \"category\":               (string) The transaction category.\n"
             "                \"send\"                  Transactions sent.\n"
             "                \"receive\"               Non-coinbase transactions received.\n"
@@ -1987,11 +1987,11 @@ UniValue listtransactions(const JSONRPCRequest& request)
     // ret must be newest to oldest
     ret.reverse();
 
-    if (IsParticlWallet(pwallet)) {
+    if (IsEfinWallet(pwallet)) {
         auto locked_chain = pwallet->chain().lock();
         LOCK(pwallet->cs_wallet);
 
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+        CHDWallet *phdw = GetEfinWallet(pwallet);
         const RtxOrdered_t &txOrdered = phdw->rtxOrdered;
 
         // TODO: Combine finding and inserting into ret loops
@@ -2061,7 +2061,7 @@ static UniValue listsinceblock(const JSONRPCRequest& request)
                 RPCResult{
             "{\n"
             "  \"transactions\": [\n"
-            "    \"address\":\"address\",    (string) The particl address of the transaction.\n"
+            "    \"address\":\"address\",    (string) The efin address of the transaction.\n"
             "    \"category\":               (string) The transaction category.\n"
             "                \"send\"                  Transactions sent.\n"
             "                \"receive\"               Non-coinbase transactions received.\n"
@@ -2150,8 +2150,8 @@ static UniValue listsinceblock(const JSONRPCRequest& request)
         }
     }
 
-    if (IsParticlWallet(pwallet)) {
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+    if (IsEfinWallet(pwallet)) {
+        CHDWallet *phdw = GetEfinWallet(pwallet);
 
         for (const auto &ri : phdw->mapRecords) {
             const uint256 &txhash = ri.first;
@@ -2178,8 +2178,8 @@ static UniValue listsinceblock(const JSONRPCRequest& request)
                 // even negative confirmation ones, hence the big negative.
                 ListTransactions(*locked_chain, pwallet, it->second, -100000000, true, removed, filter, nullptr /* filter_label */);
             } else
-            if (IsParticlWallet(pwallet)) {
-                CHDWallet *phdw = GetParticlWallet(pwallet);
+            if (IsEfinWallet(pwallet)) {
+                CHDWallet *phdw = GetEfinWallet(pwallet);
                 const uint256 &txhash = tx->GetHash();
                 MapRecords_t::const_iterator mri = phdw->mapRecords.find(txhash);
                 if (mri != phdw->mapRecords.end()) {
@@ -2236,7 +2236,7 @@ UniValue gettransaction(const JSONRPCRequest& request)
             "                                                   may be unknown for unconfirmed transactions not in the mempool\n"
             "  \"details\" : [\n"
             "    {\n"
-            "      \"address\" : \"address\",          (string) The particl address involved in the transaction\n"
+            "      \"address\" : \"address\",          (string) The efin address involved in the transaction\n"
             "      \"category\" :                      (string) The transaction category.\n"
             "                   \"send\"                  Transactions sent.\n"
             "                   \"receive\"               Non-coinbase transactions received.\n"
@@ -2281,8 +2281,8 @@ UniValue gettransaction(const JSONRPCRequest& request)
     UniValue entry(UniValue::VOBJ);
     auto it = pwallet->mapWallet.find(hash);
     if (it == pwallet->mapWallet.end()) {
-        if (IsParticlWallet(pwallet)) {
-            CHDWallet *phdw = GetParticlWallet(pwallet);
+        if (IsEfinWallet(pwallet)) {
+            CHDWallet *phdw = GetEfinWallet(pwallet);
             MapRecords_t::const_iterator mri = phdw->mapRecords.find(hash);
 
             if (mri != phdw->mapRecords.end()) {
@@ -2366,7 +2366,7 @@ static UniValue abandontransaction(const JSONRPCRequest& request)
     uint256 hash(ParseHashV(request.params[0], "txid"));
 
     if (!pwallet->mapWallet.count(hash)) {
-        if (!IsParticlWallet(pwallet) || !GetParticlWallet(pwallet)->HaveTransaction(hash)) {
+        if (!IsEfinWallet(pwallet) || !GetEfinWallet(pwallet)->HaveTransaction(hash)) {
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid or non-wallet transaction id");
         }
     }
@@ -2479,7 +2479,7 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
         throw std::runtime_error(
             RPCHelpMan{"walletpassphrase",
                 "\nStores the wallet decryption key in memory for 'timeout' seconds.\n"
-                "This is needed prior to performing transactions related to private keys such as sending particl\n"
+                "This is needed prior to performing transactions related to private keys such as sending efin\n"
             "\nNote:\n"
             "Issuing the walletpassphrase command while the wallet is already unlocked will set a new unlock\n"
             "time that overrides the old one.\n"
@@ -2544,8 +2544,8 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
         fWalletUnlockStakingOnly = request.params[2].get_bool();
     }
 
-    if (IsParticlWallet(pwallet)) {
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+    if (IsEfinWallet(pwallet)) {
+        CHDWallet *phdw = GetEfinWallet(pwallet);
         LOCK(phdw->cs_wallet);
         phdw->fUnlockForStakingOnly = fWalletUnlockStakingOnly;
     }
@@ -2695,7 +2695,7 @@ static UniValue encryptwallet(const JSONRPCRequest& request)
                 RPCExamples{
             "\nEncrypt your wallet\n"
             + HelpExampleCli("encryptwallet", "\"my pass phrase\"") +
-            "\nNow set the passphrase to use the wallet, such as for signing or sending particl\n"
+            "\nNow set the passphrase to use the wallet, such as for signing or sending efin\n"
             + HelpExampleCli("walletpassphrase", "\"my pass phrase\"") +
             "\nNow we can do something like sign\n"
             + HelpExampleCli("signmessage", "\"address\" \"test message\"") +
@@ -2829,10 +2829,10 @@ static UniValue lockunspent(const JSONRPCRequest& request)
 
         const COutPoint outpt(txid, nOutput);
 
-        if (IsParticlWallet(pwallet))  {
+        if (IsEfinWallet(pwallet))  {
             const auto it = pwallet->mapWallet.find(outpt.hash);
             if (it == pwallet->mapWallet.end()) {
-                CHDWallet *phdw = GetParticlWallet(pwallet);
+                CHDWallet *phdw = GetEfinWallet(pwallet);
                 const auto it = phdw->mapRecords.find(outpt.hash);
                 if (it == phdw->mapRecords.end()) {
                     throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, unknown transaction");
@@ -3041,7 +3041,7 @@ static UniValue getbalances(const JSONRPCRequest& request)
     LOCK(wallet.cs_wallet);
 
     CWallet* const pwallet = rpc_wallet.get();
-    if (IsParticlWallet(pwallet)) {
+    if (IsEfinWallet(pwallet)) {
         CHDWalletBalances bal;
         ((CHDWallet*)pwallet)->GetBalances(bal);
 
@@ -3155,7 +3155,7 @@ static UniValue getwalletinfo(const JSONRPCRequest& request)
     obj.pushKV("walletname", pwallet->GetName());
     obj.pushKV("walletversion", pwallet->GetVersion());
 
-    if (fParticlWallet) {
+    if (fEfinWallet) {
         CHDWalletBalances bal;
         ((CHDWallet*)pwallet)->GetBalances(bal);
 
@@ -3190,12 +3190,12 @@ static UniValue getwalletinfo(const JSONRPCRequest& request)
         obj.pushKV("immature_balance", ValueFromAmount(bal.m_mine_immature));
     }
 
-    int nTxCount = (int)pwallet->mapWallet.size() + (fParticlWallet ? (int)((CHDWallet*)pwallet)->mapRecords.size() : 0);
+    int nTxCount = (int)pwallet->mapWallet.size() + (fEfinWallet ? (int)((CHDWallet*)pwallet)->mapRecords.size() : 0);
     obj.pushKV("txcount",       (int)nTxCount);
 
     CKeyID seed_id;
-    if (IsParticlWallet(pwallet)) {
-        CHDWallet *pwhd = GetParticlWallet(pwallet);
+    if (IsEfinWallet(pwallet)) {
+        CHDWallet *pwhd = GetEfinWallet(pwallet);
 
         obj.pushKV("keypoololdest", pwhd->GetOldestActiveAccountTime());
         obj.pushKV("keypoolsize",   pwhd->CountActiveAccountKeys());
@@ -3315,7 +3315,7 @@ static UniValue loadwallet(const JSONRPCRequest& request)
         throw std::runtime_error(
             RPCHelpMan{"loadwallet",
                 "\nLoads a wallet from a wallet file or directory."
-                "\nNote that all wallet command-line options used when starting particld will be"
+                "\nNote that all wallet command-line options used when starting efind will be"
                 "\napplied to the new wallet (eg -zapwallettxes, upgradewallet, rescan, etc).\n",
                 {
                     {"filename", RPCArg::Type::STR, RPCArg::Optional::NO, "The wallet directory or .dat file."},
@@ -3420,7 +3420,7 @@ static UniValue createwallet(const JSONRPCRequest& request)
     if (!wallet) {
         throw JSONRPCError(RPC_WALLET_ERROR, "Wallet creation failed.");
     }
-    if (fParticlMode && !GetParticlWallet(wallet.get())->Initialise()) {
+    if (fEfinMode && !GetEfinWallet(wallet.get())->Initialise()) {
         throw JSONRPCError(RPC_WALLET_ERROR, "Wallet initialise failed.");
     }
 
@@ -3437,7 +3437,7 @@ static UniValue createwallet(const JSONRPCRequest& request)
             }
 
             // Set a seed for the wallet
-            if (fParticlMode && !!GetParticlWallet(wallet.get())->MakeDefaultAccount()) {
+            if (fEfinMode && !!GetEfinWallet(wallet.get())->MakeDefaultAccount()) {
                 throw JSONRPCError(RPC_WALLET_ERROR, "MakeDefaultAccount failed.");
             } else {
                 CPubKey master_pub_key = wallet->GenerateNewSeed();
@@ -3502,7 +3502,7 @@ static UniValue unloadwallet(const JSONRPCRequest& request)
 
     UnloadWallet(std::move(wallet));
 
-    if (fParticlMode) {
+    if (fEfinMode) {
         RestartStakingThreads();
     }
 
@@ -3546,8 +3546,8 @@ static UniValue resendwallettransactions(const JSONRPCRequest& request)
 
     std::vector<uint256> txids = pwallet->ResendWalletTransactionsBefore(*locked_chain, GetTime());
     UniValue result(UniValue::VARR);
-    if (IsParticlWallet(pwallet)) {
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+    if (IsEfinWallet(pwallet)) {
+        CHDWallet *phdw = GetEfinWallet(pwallet);
         std::vector<uint256> txidsRec;
         txidsRec = phdw->ResendRecordTransactionsBefore(*locked_chain, GetTime());
 
@@ -3581,9 +3581,9 @@ static UniValue listunspent(const JSONRPCRequest& request)
                 {
                     {"minconf", RPCArg::Type::NUM, /* default */ "1", "The minimum confirmations to filter"},
                     {"maxconf", RPCArg::Type::NUM, /* default */ "9999999", "The maximum confirmations to filter"},
-                    {"addresses", RPCArg::Type::ARR, /* default */ "empty array", "A json array of particl addresses to filter",
+                    {"addresses", RPCArg::Type::ARR, /* default */ "empty array", "A json array of efin addresses to filter",
                         {
-                            {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "particl address"},
+                            {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "efin address"},
                         },
                     },
                     {"include_unsafe", RPCArg::Type::BOOL, /* default */ "true", "Include outputs that are not safe to spend\n"
@@ -3604,8 +3604,8 @@ static UniValue listunspent(const JSONRPCRequest& request)
             "  {\n"
             "    \"txid\" : \"txid\",        (string) the transaction id \n"
             "    \"vout\" : n,               (numeric) the vout value\n"
-            "    \"address\" : \"address\",    (string) the particl address\n"
-            "    \"coldstaking_address\"  : \"address\" (string) the particl address this output must stake on\n"
+            "    \"address\" : \"address\",    (string) the efin address\n"
+            "    \"coldstaking_address\"  : \"address\" (string) the efin address this output must stake on\n"
             "    \"label\" : \"label\",        (string) The associated label, or \"\" for the default label\n"
             "    \"scriptPubKey\" : \"key\",   (string) the script key\n"
             "    \"amount\" : x.xxx,         (numeric) the transaction output amount in " + CURRENCY_UNIT + "\n"
@@ -3654,7 +3654,7 @@ static UniValue listunspent(const JSONRPCRequest& request)
             const UniValue& input = inputs[idx];
             CTxDestination dest = DecodeDestination(input.get_str());
             if (!IsValidDestination(dest)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Particl address: ") + input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Efin address: ") + input.get_str());
             }
             if (!destinations.insert(dest).second) {
                 throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ") + input.get_str());
@@ -3724,7 +3724,7 @@ static UniValue listunspent(const JSONRPCRequest& request)
         CTxDestination address;
         const CScript *scriptPubKey;
         bool fValidAddress;
-        if (fParticlWallet)
+        if (fEfinWallet)
         {
             scriptPubKey = out.tx->tx->vpout[out.i]->GetPScriptPubKey();
             nValue = out.tx->tx->vpout[out.i]->GetValue();
@@ -3819,9 +3819,9 @@ static UniValue listunspent(const JSONRPCRequest& request)
         }
         entry.pushKV("safe", out.fSafe);
 
-        if (IsParticlWallet(pwallet))
+        if (IsEfinWallet(pwallet))
         {
-            CHDWallet *phdw = GetParticlWallet(pwallet);
+            CHDWallet *phdw = GetEfinWallet(pwallet);
             CKeyID stakingKeyID;
             bool fStakeable = ExtractStakingKeyID(*scriptPubKey, stakingKeyID);
             if (fStakeable)
@@ -3884,7 +3884,7 @@ void FundTransaction(CWallet* const pwallet, CMutableTransaction& tx, CAmount& f
             CTxDestination dest = DecodeDestination(options["changeAddress"].get_str());
 
             if (!IsValidDestination(dest)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "changeAddress must be a valid particl address");
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "changeAddress must be a valid efin address");
             }
 
             coinControl.destChange = dest;
@@ -3938,7 +3938,7 @@ void FundTransaction(CWallet* const pwallet, CMutableTransaction& tx, CAmount& f
       }
     }
 
-    size_t nOutputs = IsParticlWallet(pwallet) ? tx.vpout.size() : tx.vout.size();
+    size_t nOutputs = IsEfinWallet(pwallet) ? tx.vpout.size() : tx.vout.size();
     if (nOutputs == 0)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "TX must have at least one output");
 
@@ -3990,7 +3990,7 @@ static UniValue fundrawtransaction(const JSONRPCRequest& request)
                     {"hexstring", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex string of the raw transaction"},
                     {"options", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED_NAMED_ARG, "for backward compatibility: passing in a true instead of an object will result in {\"includeWatching\":true}",
                         {
-                            {"changeAddress", RPCArg::Type::STR, /* default */ "pool address", "The particl address to receive the change"},
+                            {"changeAddress", RPCArg::Type::STR, /* default */ "pool address", "The efin address to receive the change"},
                             {"changePosition", RPCArg::Type::NUM, /* default */ "random", "The index of the change output"},
                             {"change_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The output type to use. Only valid if changeAddress is not specified. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
                             {"includeWatching", RPCArg::Type::BOOL, /* default */ "false", "Also select inputs which are watch only"},
@@ -3998,7 +3998,7 @@ static UniValue fundrawtransaction(const JSONRPCRequest& request)
                             {"feeRate", RPCArg::Type::AMOUNT, /* default */ "not set: makes wallet determine the fee", "Set a specific fee rate in " + CURRENCY_UNIT + "/kB"},
                             {"subtractFeeFromOutputs", RPCArg::Type::ARR, /* default */ "empty array", "A json array of integers.\n"
                             "                              The fee will be equally deducted from the amount of each specified output.\n"
-                            "                              Those recipients will receive less particl than you enter in their corresponding amount field.\n"
+                            "                              Those recipients will receive less efin than you enter in their corresponding amount field.\n"
                             "                              If no outputs are specified here, the sender pays the fee.",
                                 {
                                     {"vout_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "The zero-based output index, before a change output is added."},
@@ -4254,7 +4254,7 @@ static UniValue bumpfee(const JSONRPCRequest& request)
     CAmount new_fee;
     CMutableTransaction mtx;
     feebumper::Result res;
-    if (totalFee > 0 || IsParticlWallet(pwallet)) {
+    if (totalFee > 0 || IsEfinWallet(pwallet)) {
         // Targeting total fee bump. Requires a change output of sufficient size.
         res = feebumper::CreateTotalBumpTransaction(pwallet, hash, coin_control, totalFee, errors, old_fee, new_fee, mtx);
     } else {
@@ -4560,14 +4560,14 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() != 1) {
         throw std::runtime_error(
             RPCHelpMan{"getaddressinfo",
-            "\nReturn information about the given particl address. Some information requires the address\n"
+            "\nReturn information about the given efin address. Some information requires the address\n"
             "to be in the wallet.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The particl address to get the information of."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The efin address to get the information of."},
                 },
                 RPCResult{
             "{\n"
-            "  \"address\" : \"address\",        (string) The particl address validated\n"
+            "  \"address\" : \"address\",        (string) The efin address validated\n"
             "  \"scriptPubKey\" : \"hex\",       (string) The hex-encoded scriptPubKey generated by the address\n"
             "  \"ismine\" : true|false,        (boolean) If the address is yours or not\n"
             "  \"iswatchonly\" : true|false,   (boolean) If the address is watchonly\n"
@@ -4634,8 +4634,8 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     ret.pushKV("scriptPubKey", HexStr(scriptPubKey.begin(), scriptPubKey.end()));
 
     isminetype mine = ISMINE_NO;
-    if (IsParticlWallet(pwallet)) {
-        CHDWallet *phdw = GetParticlWallet(pwallet);
+    if (IsEfinWallet(pwallet)) {
+        CHDWallet *phdw = GetEfinWallet(pwallet);
         if (dest.type() == typeid(CExtKeyPair)) {
             CExtKeyPair ek = boost::get<CExtKeyPair>(dest);
             CKeyID id = ek.GetID();
@@ -4925,8 +4925,8 @@ UniValue sethdseed(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_WALLET_ERROR, "Cannot set a HD seed on a non-HD wallet. Start with -upgradewallet in order to upgrade a non-HD wallet to HD");
     }
 
-    if (IsParticlWallet(pwallet))
-        throw JSONRPCError(RPC_WALLET_ERROR, "Not necessary in Particl mode.");
+    if (IsEfinWallet(pwallet))
+        throw JSONRPCError(RPC_WALLET_ERROR, "Not necessary in Efin mode.");
 
     EnsureWalletIsUnlocked(pwallet);
 
@@ -5059,7 +5059,7 @@ UniValue walletcreatefundedpsbt(const JSONRPCRequest& request)
                         {
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                                 {
-                                    {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "A key-value pair. The key (string) is the particl address, the value (float or string) is the amount in " + CURRENCY_UNIT + ""},
+                                    {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "A key-value pair. The key (string) is the efin address, the value (float or string) is the amount in " + CURRENCY_UNIT + ""},
                                 },
                                 },
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
@@ -5072,7 +5072,7 @@ UniValue walletcreatefundedpsbt(const JSONRPCRequest& request)
                     {"locktime", RPCArg::Type::NUM, /* default */ "0", "Raw locktime. Non-0 value also locktime-activates inputs"},
                     {"options", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED_NAMED_ARG, "",
                         {
-                            {"changeAddress", RPCArg::Type::STR_HEX, /* default */ "pool address", "The particl address to receive the change"},
+                            {"changeAddress", RPCArg::Type::STR_HEX, /* default */ "pool address", "The efin address to receive the change"},
                             {"changePosition", RPCArg::Type::NUM, /* default */ "random", "The index of the change output"},
                             {"change_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The output type to use. Only valid if changeAddress is not specified. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
                             {"includeWatching", RPCArg::Type::BOOL, /* default */ "false", "Also select inputs which are watch only"},
@@ -5080,7 +5080,7 @@ UniValue walletcreatefundedpsbt(const JSONRPCRequest& request)
                             {"feeRate", RPCArg::Type::AMOUNT, /* default */ "not set: makes wallet determine the fee", "Set a specific fee rate in " + CURRENCY_UNIT + "/kB"},
                             {"subtractFeeFromOutputs", RPCArg::Type::ARR, /* default */ "empty array", "A json array of integers.\n"
                             "                              The fee will be equally deducted from the amount of each specified output.\n"
-                            "                              Those recipients will receive less particl than you enter in their corresponding amount field.\n"
+                            "                              Those recipients will receive less efin than you enter in their corresponding amount field.\n"
                             "                              If no outputs are specified here, the sender pays the fee.",
                                 {
                                     {"vout_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "The zero-based output index, before a change output is added."},

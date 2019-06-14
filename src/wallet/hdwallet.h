@@ -1,9 +1,9 @@
-// Copyright (c) 2017-2019 The Particl Core developers
+// Copyright (c) 2017-2019 The Efin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PARTICL_WALLET_HDWALLET_H
-#define PARTICL_WALLET_HDWALLET_H
+#ifndef EFIN_WALLET_HDWALLET_H
+#define EFIN_WALLET_HDWALLET_H
 
 #include <wallet/wallet.h>
 #include <wallet/hdwalletdb.h>
@@ -550,10 +550,10 @@ int64_t CalculateMaximumSignedTxSize(const CTransaction &tx, const CHDWallet *wa
 
 void RestartStakingThreads();
 
-bool IsParticlWallet(const CKeyStore *win);
-CHDWallet *GetParticlWallet(CKeyStore *win);
-const CHDWallet *GetParticlWallet(const CKeyStore *win);
+bool IsEfinWallet(const CKeyStore *win);
+CHDWallet *GetEfinWallet(CKeyStore *win);
+const CHDWallet *GetEfinWallet(const CKeyStore *win);
 
 
-#endif // PARTICL_WALLET_HDWALLET_H
+#endif // EFIN_WALLET_HDWALLET_H
 

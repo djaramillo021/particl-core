@@ -62,12 +62,12 @@
         <translation>Ontvang adresse</translation>
     </message>
     <message>
-        <source>These are your Particl addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Dit is jou Particl-adress vir die stuur van betalings. Kontroleer altyd die bedrag en die ontvangsadres voordat u munte stuur.</translation>
+        <source>These are your Efin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Dit is jou Efin-adress vir die stuur van betalings. Kontroleer altyd die bedrag en die ontvangsadres voordat u munte stuur.</translation>
     </message>
     <message>
-        <source>These are your Particl addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Dit is jou Particl-adress vir die stuur van betalings. Kontroleer altyd die bedrag en die ontvangsadres voordat jy munte stuur.</translation>
+        <source>These are your Efin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Dit is jou Efin-adress vir die stuur van betalings. Kontroleer altyd die bedrag en die ontvangsadres voordat jy munte stuur.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -172,8 +172,8 @@
         <translation>Bevestig beursie enkripsie.</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR PARTICL&lt;/b&gt;!</source>
-        <translation>Waarskuwing: As jy jou beursie enkripteer en jou wagwoord verloor, sal jy &lt;b&gt;AL JOU PARTICL VERLOOR&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR EFIN&lt;/b&gt;!</source>
+        <translation>Waarskuwing: As jy jou beursie enkripteer en jou wagwoord verloor, sal jy &lt;b&gt;AL JOU EFIN VERLOOR&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -184,8 +184,8 @@
         <translation>Beursie enkriptasie voltooi</translation>
     </message>
     <message>
-        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your particl from being stolen by malware infecting your computer.</source>
-        <translation>%1 gaan nou toe maak om die enkripsie proses klaar te maak. Onthou dat jou particl nie ten volle beskerm kan word deur die beursie te enkrip teen "malware" wat jou rekenaar besmet.</translation>
+        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your efin from being stolen by malware infecting your computer.</source>
+        <translation>%1 gaan nou toe maak om die enkripsie proses klaar te maak. Onthou dat jou efin nie ten volle beskerm kan word deur die beursie te enkrip teen "malware" wat jou rekenaar besmet.</translation>
     </message>
     <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
@@ -342,8 +342,8 @@
         <translation>Herindekseer blokke op skyf...</translation>
     </message>
     <message>
-        <source>Send coins to a Particl address</source>
-        <translation>Stuur muntstukke na 'n Particl adres</translation>
+        <source>Send coins to a Efin address</source>
+        <translation>Stuur muntstukke na 'n Efin adres</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -366,8 +366,8 @@
         <translation>&amp;Verifieer boodskap...</translation>
     </message>
     <message>
-        <source>Particl.</source>
-        <translation>Particl.</translation>
+        <source>Efin.</source>
+        <translation>Efin.</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -394,12 +394,12 @@
         <translation>Versleutel die private sleutels wat aan u beursie behoort</translation>
     </message>
     <message>
-        <source>Sign messages with your Particl addresses to prove you own them</source>
-        <translation>Teken boodskappe met u Particl adresse om te bewys dat u hul besit</translation>
+        <source>Sign messages with your Efin addresses to prove you own them</source>
+        <translation>Teken boodskappe met u Efin adresse om te bewys dat u hul besit</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Particl addresses</source>
-        <translation>Bevestig boodskappe om te verseker dat hulle geteken was met gespesifiseerde Particl adresse</translation>
+        <source>Verify messages to ensure they were signed with specified Efin addresses</source>
+        <translation>Bevestig boodskappe om te verseker dat hulle geteken was met gespesifiseerde Efin adresse</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -418,8 +418,8 @@
         <translation>Blad nutsbalk</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and particl: URIs)</source>
-        <translation>Versoek betalings (genereer QR kodes en particl: URIs)</translation>
+        <source>Request payments (generates QR codes and efin: URIs)</source>
+        <translation>Versoek betalings (genereer QR kodes en efin: URIs)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -430,8 +430,8 @@
         <translation>Wys die lys van gebruikte ontvangsadresse en etikette</translation>
     </message>
     <message>
-        <source>Open a particl: URI or payment request</source>
-        <translation>Open 'n particl: URI of betalingsversoek</translation>
+        <source>Open a efin: URI or payment request</source>
+        <translation>Open 'n efin: URI of betalingsversoek</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
@@ -474,8 +474,8 @@
         <translation>Op datum</translation>
     </message>
     <message>
-        <source>Show the %1 help message to get a list with possible Particl command-line options</source>
-        <translation>Wys die %1 hulpboodskap om 'n lys met moontlike Particl bevel-lyn opsies te verkry</translation>
+        <source>Show the %1 help message to get a list with possible Efin command-line options</source>
+        <translation>Wys die %1 hulpboodskap om 'n lys met moontlike Efin bevel-lyn opsies te verkry</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -544,8 +544,8 @@
         <translation>Beursie is &lt;b&gt;versleutel&lt;/b&gt; en is tans &lt;b&gt;gesluit&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>A fatal error occurred. Particl can no longer continue safely and will quit.</source>
-        <translation>'n Noodlottige fout het voorgekom. Particl kan nie langer voortgaan nie en sal afsluit.</translation>
+        <source>A fatal error occurred. Efin can no longer continue safely and will quit.</source>
+        <translation>'n Noodlottige fout het voorgekom. Efin kan nie langer voortgaan nie en sal afsluit.</translation>
     </message>
 </context>
 <context>
@@ -734,8 +734,8 @@
         <translation>Wysig stuurende adres</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Particl address.</source>
-        <translation>Die ingeskrewe adres "%1" is nie 'n geldige Particl adres nie.</translation>
+        <source>The entered address "%1" is not a valid Efin address.</source>
+        <translation>Die ingeskrewe adres "%1" is nie 'n geldige Efin adres nie.</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
@@ -799,8 +799,8 @@
         <translation>Welkom by %1.</translation>
     </message>
     <message>
-        <source>Particl.</source>
-        <translation>Particl.</translation>
+        <source>Efin.</source>
+        <translation>Efin.</translation>
     </message>
     <message>
         <source>The wallet will also be stored in this directory.</source>

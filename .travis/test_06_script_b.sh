@@ -6,7 +6,7 @@
 
 export LC_ALL=C.UTF-8
 
-cd "build/particl-$HOST" || (echo "could not enter distdir build/particl-$HOST"; exit 1)
+cd "build/efin-$HOST" || (echo "could not enter distdir build/efin-$HOST"; exit 1)
 
 if [ "$RUN_UNIT_TESTS" = "true" ]; then
   BEGIN_FOLD unit-tests
@@ -24,7 +24,7 @@ echo "$RUN_FUNCTIONAL_TESTS"
 
 if [ "$RUN_FUNCTIONAL_TESTS" = "true" ]; then
   BEGIN_FOLD functional-tests
-  DOCKER_EXEC test/functional/test_runner.py --ci --combinedlogslen=4000 ${TEST_RUNNER_EXTRA} --quiet --failfast --particl --insight --bitcoin
+  DOCKER_EXEC test/functional/test_runner.py --ci --combinedlogslen=4000 ${TEST_RUNNER_EXTRA} --quiet --failfast --efin --insight --bitcoin
   END_FOLD
 fi
 
